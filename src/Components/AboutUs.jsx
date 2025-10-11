@@ -59,7 +59,7 @@ function AboutUs() {
 
         <div className="lg:w-1/2">
           <img 
-            src="/about-bg.jpg" 
+            src="https://pixner.net/s4i/Reunir/img/about-bg.jpg" 
             alt="About Reunir" 
           />
         </div>
