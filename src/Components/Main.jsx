@@ -5,8 +5,8 @@ function Main() {
     <div className="flex items-center justify-center px-4 py-20 md:py-8">
       <div className="text-center max-w-4xl">
         <div className="flex flex-col gap-10 md:gap-5 text-white text-4xl sm:text-6xl md:text-7xl mb-8">
-          <span className="font-extralight text-4xl">TAKE YOUR</span>
-          <span className="text-orange-600 font-bold text-5xl">INVESTSTRATEGY</span>
+          <span className="font-extralight text-4xl md:text-5xl">TAKE YOUR</span>
+          <span className="text-orange-600 font-bold text-4xl md:text-5xl">INVESTSTRATEGY</span>
           <span>TO THE NEXT LEVEL</span>
         </div>
 
