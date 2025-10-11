@@ -4,27 +4,27 @@ import { FaMoneyBillWave, FaRocket, FaUserFriends, FaShieldAlt, FaHeadset, FaChe
 function FeaturesSlider() {
   const features = [
     {
-      icon: <FaMoneyBillWave className="text-2xl md:text-3xl text-blue-600" />,
+      icon: <FaMoneyBillWave className="text-4xl md:text-4xl text-blue-600" />,
       title: "DAILY INCOME",
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
     },
     {
-      icon: <FaRocket className="text-2xl md:text-3xl text-green-600" />,
+      icon: <FaRocket className="text-4xl md:text-4xl text-green-600" />,
       title: "FASTEST PAYMENTS",
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
     },
     {
-      icon: <FaUserFriends className="text-2xl md:text-3xl text-purple-600" />,
+      icon: <FaUserFriends className="text-4xl md:text-4xl text-purple-600" />,
       title: "EASY TO USE",
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
     },
     {
-      icon: <FaShieldAlt className="text-2xl md:text-3xl text-red-600" />,
+      icon: <FaShieldAlt className="text-4xl md:text-4xl text-red-600" />,
       title: "HIGH SECURITY",
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
     },
     {
-      icon: <FaHeadset className="text-2xl md:text-3xl text-orange-600" />,
+      icon: <FaHeadset className="text-4xl md:text-4xl text-orange-600" />,
       title: "24/7 SUPPORT",
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
     }
@@ -101,7 +101,7 @@ function FeaturesSlider() {
                           key={featureIndex}
                           className="flex-1 min-w-0"
                         >
-                          <div className="bg-gray-50 rounded-xl p-4 md:p-5 shadow-md border border-gray-200 text-center hover:shadow-lg transition-shadow h-full">
+                          <div className="bg-gray-50 rounded-xl p-4 md:p-5 py-10 shadow-md border border-gray-200 text-center hover:shadow-lg transition-shadow">
                             <div className="flex justify-center mb-3">
                               {feature.icon}
                             </div>

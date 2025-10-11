@@ -86,7 +86,7 @@ function OurSmartApp() {
               alt="Smart App Preview"
               className="w-full h-auto transform hover:scale-105 transition-transform duration-500"
             />
-            <div className="absolute -top-30 size-80 -right-3 md:-right-0 md:size-80 bg-blue-400 rounded-full opacity-20 animate-pulse"></div>
+            <div className="absolute -top-8 md:-top-30 size-80 -right-3 md:-right-10 md:size-80 bg-blue-400 rounded-full opacity-20 animate-pulse"></div>
             <div className="absolute -bottom-10 -left-10 size-60 bg-purple-300 rounded-full opacity-20 animate-pulse delay-1000"></div>
           </div>
         </div>

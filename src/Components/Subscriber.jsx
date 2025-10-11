@@ -28,11 +28,11 @@ function Subscriber() {
         </h1>
 
         <div className="w-full md:w-2/3 mx-auto border-2 border-gray-400 p-1 rounded-full">
-          <div className="flex flex-row gap-3">
+          <div className="flex flex-row justify-between gap-3">
             <input 
               type="email" 
               placeholder="Enter your email address"
-              className="w-1/2 md:w-full px-4 py-3 focus:outline-none text-white placeholder-gray-200"
+              className="md:w-full px-4 py-3 focus:outline-none text-white placeholder-gray-200"
             />
             <button className="bg-blue-500 text-white px-6 py-3 border-2 border-orange-600 rounded-full font-semibold hover:bg-orange-600 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center gap-2 whitespace-nowrap">
               <FaPaperPlane className="w-4 h-4" />

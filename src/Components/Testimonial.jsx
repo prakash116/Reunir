@@ -62,9 +62,9 @@ const ClientTestimonials = () => {
   return (
     <div className="bg-[url('https://pixner.net/s4i/Reunir/img/testimonial-bg.jpg')]">
       <Testimonial1 />
-      <div className="min-h-screen bg-cover bg-center flex items-center justify-center p-4 relative overflow-hidden">
+      <div className="md:min-h-screen bg-cover bg-center flex items-center justify-center p-4 relative overflow-hidden">
         <div className="absolute inset-0 bg-cover bg-center opacity-10"></div>
-        <div className="max-w-4xl w-2/3 mx-auto relative z-10">
+        <div className="max-w-4xl w-full md:w-2/3 mx-auto relative z-10">
           <div className="bg-white rounded-2xl shadow-2xl p-8 md:p-12 relative mb-16 transform transition-all duration-500 ease-in-out hover:shadow-2xl">
             <div className="text-center mb-8">
               <span className="text-6xl text-gray-300 font-serif leading-0">

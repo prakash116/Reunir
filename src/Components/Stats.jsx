@@ -5,7 +5,7 @@ function Stats() {
   return (
     <div className="pb-10">
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-0">
           
           <div className="text-center space-y-3 p-6">
             <FaUsers className="text-5xl text-orange-500 mx-auto" />

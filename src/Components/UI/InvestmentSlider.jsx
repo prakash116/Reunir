@@ -105,7 +105,7 @@ function InvestmentSlider() {
                           className="flex-1 min-w-0"
                         >
                           <div className="bg-gray-50 flex flex-col items-center gap-3 rounded-xl pb-5 shadow-md border border-gray-200 text-center hover:shadow-lg transition-shadow h-full">
-                            <div className='bg-red-500 rounded-b-full h-32 w-full'>
+                            <div className='bg-red-500 rounded-b-full h-45 md:h-32 w-full'>
                               <img src="/deposit-bg.jpg" alt="" className="rounded-b-full h-32 w-full"/>
                             </div>
                             <div className="flex bg-white p-2 rounded-full shadow justify-center mb-3 -mt-10">
