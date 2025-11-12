@@ -1,213 +1,269 @@
-import React from "react";
-import {
-  FaMoneyBillWave,
-  FaArrowUp,
-  FaUsers,
-  FaUser,
-  FaBitcoin,
-  FaPaypal,
-  FaCreditCard,
-  FaEthereum,
-} from "react-icons/fa";
-import { SiLitecoin, SiRipple } from "react-icons/si";
+import React, { memo } from "react";
+import { motion } from "framer-motion";
+import { FaCalendarAlt, FaUsers, FaTrophy, FaMapMarkerAlt } from "react-icons/fa";
 
-function TransactionHistory() {
-  const transactions = [
+const UpcomingEvent = memo(function UpcomingEvent() {
+  const events = [
     {
       id: 1,
-      name: "John Smith",
-      avatar: "👤",
-      price: "$1,250.00",
-      dailyDividend: "$25.50",
-      amount: "$12,500.00",
-      depositBy: "Bitcoin",
-      currency: "BTC",
+      name: "Asian Sikh Games 2025",
+      avatar: "🏃",
+      location: "Multiple Venues Across Asia",
+      participants: "5,000+ Athletes",
+      status: "Planning Phase",
+      category: "Multi-Sport Event",
     },
     {
       id: 2,
-      name: "Sarah Wilson",
-      avatar: "👩",
-      price: "$2,800.00",
-      dailyDividend: "$56.00",
-      amount: "$28,000.00",
-      depositBy: "PayPal",
-      currency: "USD",
+      name: "Regional Qualifiers",
+      avatar: "🏆",
+      location: "Various Host Nations",
+      participants: "2,000+ Athletes",
+      status: "Scheduled",
+      category: "Qualification",
     },
     {
       id: 3,
-      name: "Mike Chen",
-      avatar: "👨",
-      price: "$850.00",
-      dailyDividend: "$17.00",
-      amount: "$8,500.00",
-      depositBy: "Ethereum",
-      currency: "ETH",
+      name: "Youth Development Camp",
+      avatar: "👦",
+      location: "New Delhi, India",
+      participants: "500+ Young Athletes",
+      status: "Confirmed",
+      category: "Training",
     },
     {
       id: 4,
-      name: "Emma Davis",
-      avatar: "👩",
-      price: "$3,200.00",
-      dailyDividend: "$64.00",
-      amount: "$32,000.00",
-      depositBy: "Credit Card",
-      currency: "USD",
+      name: "International Sikh Sports Summit",
+      avatar: "🤝",
+      location: "Virtual & Physical",
+      participants: "Sports Officials",
+      status: "Planning",
+      category: "Conference",
     },
     {
       id: 5,
-      name: "Alex Johnson",
-      avatar: "👤",
-      price: "$1,750.00",
-      dailyDividend: "$35.00",
-      amount: "$17,500.00",
-      depositBy: "Litecoin",
-      currency: "LTC",
+      name: "Community Sports Festival",
+      avatar: "🎪",
+      location: "Major Sikh Communities",
+      participants: "10,000+ Attendees",
+      status: "In Discussion",
+      category: "Festival",
     },
   ];
 
-  // Function to get currency icon
-  const getCurrencyIcon = (currency) => {
-    switch (currency) {
-      case "BTC":
-        return <FaBitcoin className="text-orange-500 text-lg" />;
-      case "ETH":
-        return <FaEthereum className="text-purple-500 text-lg" />;
-      case "LTC":
-        return <SiLitecoin className="text-gray-400 text-lg" />;
-      case "XRP":
-        return <SiRipple className="text-blue-400 text-lg" />;
-      case "USD":
-        return <FaMoneyBillWave className="text-green-500 text-lg" />;
+  // Function to get status icon
+  const getStatusIcon = (status) => {
+    switch (status) {
+      case "Confirmed":
+        return <FaCalendarAlt className="text-green-500 text-lg" />;
+      case "Scheduled":
+        return <FaCalendarAlt className="text-blue-500 text-lg" />;
+      case "Planning Phase":
+        return <FaCalendarAlt className="text-orange-500 text-lg" />;
+      case "Planning":
+        return <FaCalendarAlt className="text-yellow-500 text-lg" />;
+      case "In Discussion":
+        return <FaCalendarAlt className="text-purple-500 text-lg" />;
       default:
-        return <FaMoneyBillWave className="text-green-500 text-lg" />;
+        return <FaCalendarAlt className="text-gray-500 text-lg" />;
     }
   };
 
-  // Function to get deposit method icon
-  const getDepositIcon = (method) => {
-    switch (method) {
-      case "Bitcoin":
-        return <FaBitcoin className="text-orange-500" />;
-      case "PayPal":
-        return <FaPaypal className="text-blue-500" />;
-      case "Ethereum":
-        return <FaEthereum className="text-purple-500" />;
-      case "Credit Card":
-        return <FaCreditCard className="text-blue-600" />;
-      case "Litecoin":
-        return <SiLitecoin className="text-gray-400" />;
+  // Function to get category icon
+  const getCategoryIcon = (category) => {
+    switch (category) {
+      case "Multi-Sport Event":
+        return <FaTrophy className="text-orange-500" />;
+      case "Qualification":
+        return <FaUsers className="text-blue-500" />;
+      case "Training":
+        return <FaUsers className="text-green-500" />;
+      case "Conference":
+        return <FaUsers className="text-purple-500" />;
+      case "Festival":
+        return <FaTrophy className="text-red-500" />;
       default:
-        return <FaMoneyBillWave className="text-green-500" />;
+        return <FaTrophy className="text-gray-500" />;
+    }
+  };
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        duration: 0.6
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5,
+        ease: "easeOut"
+      }
+    }
+  };
+
+  const tableRowVariants = {
+    hidden: { opacity: 0, x: -20 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: {
+        duration: 0.4,
+        ease: "easeOut"
+      }
     }
   };
 
   return (
     <div className="bg-gray-50 min-h-screen">
       {/* Header Section */}
-      <div className="bg-transparent py-12 px-4">
+      <motion.div 
+        className="bg-transparent py-12 px-4"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-50px" }}
+        variants={containerVariants}
+      >
         <div className="max-w-3xl mx-auto text-center space-y-6">
-          <span className="text-black font-medium text-2xl block">
-            User Statistics
-          </span>
+          <motion.span 
+            className="text-black font-medium text-2xl block"
+            variants={itemVariants}
+          >
+            Event Updates
+          </motion.span>
 
-          <h1 className="text-4xl font-bold text-orange-600">
-            Latest Transaction
-          </h1>
+          <motion.h1 
+            className="text-4xl font-bold text-orange-600"
+            variants={itemVariants}
+          >
+            Upcoming Event
+          </motion.h1>
 
-          <p className="text-gray-600 text-base leading-relaxed">
-            Our goal is to simplify investing so that anyone can be an investor.
-            With this in mind, we hand-pick the investments we offer on our
-            platform.
-          </p>
+          <motion.p 
+            className="text-gray-600 text-base leading-relaxed"
+            variants={itemVariants}
+          >
+            The next edition of the Asian Sikh Games is being planned, with dates yet to be finalized. 
+            Updates will be announced soon.
+          </motion.p>
 
           {/* Buttons with Icons */}
-          <div className="flex flex-col md:flex-row justify-center gap-4 items-center p-6 rounded-full border-2 border-orange-600 bg-white">
-            <button className="flex items-center gap-2 bg-orange-600 hover:bg-orange-700 text-white font-semibold py-3 px-6 rounded-full transition-colors shadow-lg">
-              <FaMoneyBillWave className="text-lg" />
-              Last Deposits
-            </button>
-            <button className="flex items-center gap-2 bg-orange-600 hover:bg-orange-700 text-white font-semibold py-3 px-6 rounded-full transition-colors shadow-lg">
-              <FaArrowUp className="text-lg" />
-              Top Withdrawals
-            </button>
-            <button className="flex items-center gap-2 bg-orange-600 hover:bg-orange-700 text-white font-semibold py-3 px-6 rounded-full transition-colors shadow-lg">
+          <motion.div 
+            className="flex flex-col md:flex-row justify-center gap-4 items-center p-6 rounded-full border-2 border-orange-600 bg-white"
+            variants={itemVariants}
+          >
+            <motion.button 
+              className="flex items-center gap-2 bg-orange-600 hover:bg-orange-700 text-white font-semibold py-3 px-6 rounded-full transition-colors shadow-lg"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <FaCalendarAlt className="text-lg" />
+              Event Schedule
+            </motion.button>
+            <motion.button 
+              className="flex items-center gap-2 bg-orange-600 hover:bg-orange-700 text-white font-semibold py-3 px-6 rounded-full transition-colors shadow-lg"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
               <FaUsers className="text-lg" />
-              Last Investors
-            </button>
-          </div>
+              Participants
+            </motion.button>
+            <motion.button 
+              className="flex items-center gap-2 bg-orange-600 hover:bg-orange-700 text-white font-semibold py-3 px-6 rounded-full transition-colors shadow-lg"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <FaTrophy className="text-lg" />
+              Sports List
+            </motion.button>
+          </motion.div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Table Section with Horizontal Scroll */}
       <div className="max-w-6xl mx-auto px-4 pb-12">
-        <div className="bg-white shadow-lg overflow-hidden">
+        <motion.div 
+          className="bg-white shadow-lg overflow-hidden"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.6 }}
+        >
           {/* Desktop Table */}
           <div className="hidden lg:block">
             <table className="w-full">
               <thead className="bg-gradient-to-r from-blue-400 to-blue-500 text-white">
                 <tr>
-                  <th className="py-4 px-6 text-left font-semibold">Name</th>
-                  <th className="py-4 px-6 text-left font-semibold">Price</th>
+                  <th className="py-4 px-6 text-left font-semibold">Event Name</th>
+                  <th className="py-4 px-6 text-left font-semibold">Location</th>
                   <th className="py-4 px-6 text-left font-semibold">
-                    Daily Dividend
+                    Participants
                   </th>
-                  <th className="py-4 px-6 text-left font-semibold">Amounts</th>
+                  <th className="py-4 px-6 text-left font-semibold">Status</th>
                   <th className="py-4 px-6 text-left font-semibold">
-                    Deposit By
-                  </th>
-                  <th className="py-4 px-6 text-left font-semibold">
-                    Currency
+                    Category
                   </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
-                {transactions.map((transaction) => (
-                  <tr
-                    key={transaction.id}
+                {events.map((event, index) => (
+                  <motion.tr
+                    key={event.id}
                     className="hover:bg-gray-50 transition-colors"
+                    variants={tableRowVariants}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.1 }}
                   >
                     <td className="py-4 px-6">
                       <div className="flex items-center gap-3">
                         <div className="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center text-orange-600 font-bold">
-                          {transaction.avatar}
+                          {event.avatar}
                         </div>
                         <span className="font-medium text-gray-800">
-                          {transaction.name}
+                          {event.name}
                         </span>
                       </div>
                     </td>
                     <td className="py-4 px-6">
-                      <span className="font-semibold text-green-600">
-                        {transaction.price}
-                      </span>
+                      <div className="flex items-center gap-2">
+                        <FaMapMarkerAlt className="text-red-500" />
+                        <span className="text-gray-700">
+                          {event.location}
+                        </span>
+                      </div>
                     </td>
                     <td className="py-4 px-6">
                       <span className="font-semibold text-blue-600">
-                        {transaction.dailyDividend}
-                      </span>
-                    </td>
-                    <td className="py-4 px-6">
-                      <span className="font-bold text-gray-800">
-                        {transaction.amount}
+                        {event.participants}
                       </span>
                     </td>
                     <td className="py-4 px-6">
                       <div className="flex items-center gap-2">
-                        {getDepositIcon(transaction.depositBy)}
-                        <span className="text-gray-700">
-                          {transaction.depositBy}
-                        </span>
-                      </div>
-                    </td>
-                    <td className="py-4 px-6">
-                      <div className="flex items-center gap-2">
-                        {getCurrencyIcon(transaction.currency)}
+                        {getStatusIcon(event.status)}
                         <span className="font-medium text-gray-700">
-                          {transaction.currency}
+                          {event.status}
                         </span>
                       </div>
                     </td>
-                  </tr>
+                    <td className="py-4 px-6">
+                      <div className="flex items-center gap-2">
+                        {getCategoryIcon(event.category)}
+                        <span className="text-gray-700">
+                          {event.category}
+                        </span>
+                      </div>
+                    </td>
+                  </motion.tr>
                 ))}
               </tbody>
             </table>
@@ -217,79 +273,77 @@ function TransactionHistory() {
           <div className="lg:hidden">
             <div className="overflow-x-auto">
               <div className="min-w-[800px]">
-                {" "}
-                {/* Minimum width to ensure all columns are visible */}
                 <table className="w-full">
                   <thead className="bg-gradient-to-r from-orange-500 to-orange-600 text-white">
                     <tr>
                       <th className="py-4 px-4 text-left font-semibold whitespace-nowrap">
-                        Name
+                        Event Name
                       </th>
                       <th className="py-4 px-4 text-left font-semibold whitespace-nowrap">
-                        Price
+                        Location
                       </th>
                       <th className="py-4 px-4 text-left font-semibold whitespace-nowrap">
-                        Daily Dividend
+                        Participants
                       </th>
                       <th className="py-4 px-4 text-left font-semibold whitespace-nowrap">
-                        Amounts
+                        Status
                       </th>
                       <th className="py-4 px-4 text-left font-semibold whitespace-nowrap">
-                        Deposit By
-                      </th>
-                      <th className="py-4 px-4 text-left font-semibold whitespace-nowrap">
-                        Currency
+                        Category
                       </th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200">
-                    {transactions.map((transaction) => (
-                      <tr
-                        key={transaction.id}
+                    {events.map((event, index) => (
+                      <motion.tr
+                        key={event.id}
                         className="hover:bg-gray-50 transition-colors"
+                        variants={tableRowVariants}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true }}
+                        transition={{ delay: index * 0.1 }}
                       >
                         <td className="py-4 px-4 whitespace-nowrap">
                           <div className="flex items-center gap-3">
                             <div className="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center text-orange-600 font-bold text-sm">
-                              {transaction.avatar}
+                              {event.avatar}
                             </div>
                             <span className="font-medium text-gray-800 text-sm">
-                              {transaction.name}
+                              {event.name}
                             </span>
                           </div>
                         </td>
                         <td className="py-4 px-4 whitespace-nowrap">
-                          <span className="font-semibold text-green-600 text-sm">
-                            {transaction.price}
-                          </span>
+                          <div className="flex items-center gap-2">
+                            <FaMapMarkerAlt className="text-red-500 text-sm" />
+                            <span className="text-gray-700 text-sm">
+                              {event.location}
+                            </span>
+                          </div>
                         </td>
                         <td className="py-4 px-4 whitespace-nowrap">
                           <span className="font-semibold text-blue-600 text-sm">
-                            {transaction.dailyDividend}
-                          </span>
-                        </td>
-                        <td className="py-4 px-4 whitespace-nowrap">
-                          <span className="font-bold text-gray-800 text-sm">
-                            {transaction.amount}
+                            {event.participants}
                           </span>
                         </td>
                         <td className="py-4 px-4 whitespace-nowrap">
                           <div className="flex items-center gap-2">
-                            {getDepositIcon(transaction.depositBy)}
-                            <span className="text-gray-700 text-sm">
-                              {transaction.depositBy}
-                            </span>
-                          </div>
-                        </td>
-                        <td className="py-4 px-4 whitespace-nowrap">
-                          <div className="flex items-center gap-2">
-                            {getCurrencyIcon(transaction.currency)}
+                            {getStatusIcon(event.status)}
                             <span className="font-medium text-gray-700 text-sm">
-                              {transaction.currency}
+                              {event.status}
                             </span>
                           </div>
                         </td>
-                      </tr>
+                        <td className="py-4 px-4 whitespace-nowrap">
+                          <div className="flex items-center gap-2">
+                            {getCategoryIcon(event.category)}
+                            <span className="text-gray-700 text-sm">
+                              {event.category}
+                            </span>
+                          </div>
+                        </td>
+                      </motion.tr>
                     ))}
                   </tbody>
                 </table>
@@ -305,19 +359,26 @@ function TransactionHistory() {
               </p>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
-      <div className="flex justify-center items-center pb-5">
-        <a
+      <motion.div 
+        className="flex justify-center items-center pb-5"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-50px" }}
+        transition={{ duration: 0.5, delay: 0.3 }}
+      >
+        <motion.a
           href="#"
           className="group text-white bg-gradient-to-r from-blue-900 to-orange-400 border border-orange-400 font-medium px-10 py-3 rounded-full transition-all duration-300 hover:bg-orange-500 hover:from-orange-500 hover:to-orange-500 hover:border-transparent"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
         >
-          {" "}
-          BROWES MORE{" "}
-        </a>
-      </div>
+          VIEW ALL EVENTS
+        </motion.a>
+      </motion.div>
     </div>
   );
-}
+});
 
-export default TransactionHistory;
+export default UpcomingEvent;

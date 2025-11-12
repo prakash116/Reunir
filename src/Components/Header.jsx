@@ -14,23 +14,23 @@ function Header() {
 
   return (
     <header className="bg-indigo-950 md:bg-transparent">
-      <div className="container mx-auto px-4 py-4">
+      <div className="mx-auto px-10 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center space-x-2">
             <div className="w-8 h-8 bg-blue-600 rounded-full"></div>
-            <span className="text-2xl font-bold text-white">REUNIR</span>
+            <span className="text-2xl font-bold text-white">ASGF</span>
           </div>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
             <a href="#" className="text-white hover:text-orange-500 font-medium">HOME</a>
+            <a href="#" className="text-white hover:text-orange-500 font-medium">OUR PURPOSE</a>
+            <a href="#" className="text-white hover:text-orange-500 font-medium">PARTNERSHIPS</a>
+            <a href="#" className="text-white hover:text-orange-500 font-medium">SPONSORSHIP</a>
             <a href="#" className="text-white hover:text-orange-500 font-medium">ABOUT</a>
-            <a href="#" className="text-white hover:text-orange-500 font-medium">AFFILIATES</a>
-            <a href="#" className="text-white hover:text-orange-500 font-medium">PLANS</a>
-            <a href="#" className="text-white hover:text-orange-500 font-medium">BLOG</a>
             <a href="#" className="text-white hover:text-orange-500 font-medium">CONTACT</a>
-            <a href="#" className="group text-white bg-gradient-to-r from-blue-900 to-orange-400 border border-orange-400 font-medium px-10 py-3 rounded-full transition-all duration-300 hover:bg-orange-500 hover:from-orange-500 hover:to-orange-500 hover:border-transparent">  JOIN US </a>
+            <a href="#" className="group text-white bg-gradient-to-r from-blue-900 to-orange-400 border border-orange-400 font-medium px-10 py-3 rounded-full transition-all duration-300 hover:bg-orange-500 hover:from-orange-500 hover:to-orange-500 hover:border-transparent"> GET INVOLVED </a>
         </nav>
 
           {/* Mobile Menu Button */}

@@ -1,43 +1,114 @@
-import React from 'react'
-import { FaHeadset, FaEnvelope, FaGlobe, FaShoppingCart } from 'react-icons/fa'
+import React, { memo } from 'react';
+import { motion } from 'framer-motion';
+import { FaHeadset, FaEnvelope, FaUser, FaImages } from 'react-icons/fa';
 
-function PreHeader() {
+const PreHeader = memo(function PreHeader() {
+  const iconVariants = {
+    hover: {
+      scale: 1.1,
+      transition: {
+        duration: 0.2,
+        ease: "easeInOut"
+      }
+    }
+  };
+
+  const textVariants = {
+    hover: {
+      color: "#ffffff",
+      transition: {
+        duration: 0.2,
+        ease: "easeInOut"
+      }
+    }
+  };
+
   return (
-    <div className='hidden md:block text-white py-2 px-25 border-b border-gray-500'>
+    <motion.div 
+      className='hidden md:block text-white py-2 px-4 sm:px-8 lg:px-14 border-b border-gray-500 bg-gray-900'
+      initial={{ opacity: 0, y: -10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3 }}
+    >
       <div className='max-w-full mx-auto flex flex-col sm:flex-row justify-between items-center gap-2'>
         
         {/* Left Section - Support */}
-        <div className='flex flex-col md:flex-row items-center gap-4 text-sm'>
-          <div className='flex items-center gap-2'>
-            <FaHeadset className="text-blue-400" />
-            <span className='text-gray-300'>Support</span>
-          </div>
-          <div className='flex items-center gap-2'>
-            <FaEnvelope className="text-blue-400" />
-            <span className='text-gray-300'>info@reunir.com</span>
-          </div>
-        </div>
+        <motion.div 
+          className='flex flex-col md:flex-row items-center gap-4 text-sm'
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.4, delay: 0.1 }}
+        >
+          <motion.div 
+            className='flex items-center gap-2 cursor-pointer'
+            whileHover="hover"
+          >
+            <motion.div variants={iconVariants}>
+              <FaHeadset className="text-blue-400" />
+            </motion.div>
+            <motion.span 
+              className='text-gray-300'
+              variants={textVariants}
+            >
+              Support
+            </motion.span>
+          </motion.div>
+          <motion.div 
+            className='flex items-center gap-2 cursor-pointer'
+            whileHover="hover"
+          >
+            <motion.div variants={iconVariants}>
+              <FaEnvelope className="text-blue-400" />
+            </motion.div>
+            <motion.span 
+              className='text-gray-300'
+              variants={textVariants}
+            >
+              info@abc.com
+            </motion.span>
+          </motion.div>
+        </motion.div>
 
-        {/* Right Section - Language & Cart */}
-        <div className='flex flex-col md:flex-row items-center gap-4 text-sm'>
-          <div className='flex items-center gap-2'>
-            <FaGlobe className="text-blue-400" />
-            <select className='bg-gray-800 text-gray-300 border border-gray-700 rounded px-2 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500'>
-              <option>English</option>
-              <option>Spanish</option>
-              <option>French</option>
-              <option>German</option>
-            </select>
-          </div>
-          <div className='flex items-center gap-2'>
-            <FaShoppingCart className="text-blue-400" />
-            <span className='text-gray-300'>My Cart</span>
-          </div>
-        </div>
+        {/* Right Section - Founder & Gallery */}
+        <motion.div 
+          className='flex flex-col md:flex-row items-center gap-4 text-sm'
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.4, delay: 0.1 }}
+        >
+          <motion.div 
+            className='flex items-center gap-2 cursor-pointer'
+            whileHover="hover"
+          >
+            <motion.div variants={iconVariants}>
+              <FaUser className="text-blue-400" />
+            </motion.div>
+            <motion.span 
+              className='text-gray-300'
+              variants={textVariants}
+            >
+              Our Founder
+            </motion.span>
+          </motion.div>
+          <motion.div 
+            className='flex items-center gap-2 cursor-pointer'
+            whileHover="hover"
+          >
+            <motion.div variants={iconVariants}>
+              <FaImages className="text-blue-400" />
+            </motion.div>
+            <motion.span 
+              className='text-gray-300'
+              variants={textVariants}
+            >
+              Gallery
+            </motion.span>
+          </motion.div>
+        </motion.div>
 
       </div>
-    </div>
-  )
-}
+    </motion.div>
+  );
+});
 
-export default PreHeader
+export default PreHeader;

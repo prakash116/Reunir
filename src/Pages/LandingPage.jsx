@@ -1,5 +1,4 @@
 import React from 'react'
-import Home from './Home.jsx'
 import InvestmentCalculator from '../Components/InvestmentCalculator.jsx'
 import AboutUs from '../Components/AboutUs.jsx'
 import ChooseUs from '../Components/ChooseUs.jsx'
@@ -7,7 +6,6 @@ import Guide from '../Components/Guide.jsx'
 import Advantage from '../Components/Advantage.jsx'
 import InvestmentPlans from '../Components/InvestmentPlans.jsx'
 import Testimonial from '../Components/Testimonial.jsx'
-import Partner from '../Components/Partner.jsx'
 import Transactions from '../Components/Transactions.jsx'
 import TransactionHistory from '../Components/TransactionHistory.jsx'
 import OurSmartApp from '../Components/OurSmartApp.jsx'
@@ -16,6 +14,7 @@ import GetInTouch from '../Components/GetInTouch.jsx'
 import Footer from '../Components/Footer.jsx'
 import Subscriber from '../Components/Subscriber.jsx'
 import FAQ from '../Components/FAQ.jsx'
+import Home from './Home.jsx'
 
 function LandingPage() {
   return (
@@ -28,7 +27,6 @@ function LandingPage() {
       <Advantage/>
       <InvestmentPlans/>
       <InvestmentCalculator/>
-      <Partner/>
       <Transactions/>
       <TransactionHistory/>
       <OurSmartApp/>
