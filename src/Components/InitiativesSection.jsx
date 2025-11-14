@@ -120,7 +120,7 @@ const InitiativesSection = memo(function InitiativesSection() {
           transition={{ duration: 0.6 }}
         >
           <motion.h1 
-            className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6"
+            className="text-4xl sm:text-5xl lg:text-4xl font-bold text-gray-900 mb-6"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
@@ -128,7 +128,7 @@ const InitiativesSection = memo(function InitiativesSection() {
             Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-600">Initiatives</span>
           </motion.h1>
           <motion.p
-            className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto mb-8"
+            className="text-lg sm:text-lg text-gray-600 max-w-3xl mx-auto mb-8"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.4 }}

@@ -122,13 +122,13 @@ const GetInvolved = memo(function GetInvolved() {
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Header with Modern Typography */}
         <motion.div 
-          className="text-center mb-16 sm:mb-20 lg:mb-24"
+          className="text-center mb-16"
           initial={{ opacity: 0, y: -30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
           <motion.h1 
-            className="text-4xl sm:text-6xl lg:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 mb-6 tracking-tight"
+            className="text-4xl font-black text-orange-600 py-5"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
@@ -136,7 +136,7 @@ const GetInvolved = memo(function GetInvolved() {
             GET INVOLVED
           </motion.h1>
           <motion.p
-            className="text-lg sm:text-xl text-gray-300 max-w-2xl mx-auto mb-8 font-light tracking-wide"
+            className="text-lg sm:text-xl text-gray-300 max-w-2xl mx-auto mb-4 font-light tracking-wide"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.4 }}
@@ -153,7 +153,7 @@ const GetInvolved = memo(function GetInvolved() {
 
         {/* Circular Role Cards */}
         <motion.div 
-          className="mb-20 lg:mb-28"
+          className="mb-10"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
@@ -188,18 +188,6 @@ const GetInvolved = memo(function GetInvolved() {
                     {role.title}
                   </motion.h3>
                 </div>
-
-                {/* Description Tooltip */}
-                <motion.div 
-                  className="absolute top-full left-1/2 transform -translate-x-1/2 mt-4 w-48 bg-slate-800/90 backdrop-blur-md rounded-lg p-3 border border-slate-700 shadow-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-                  initial={{ scale: 0.8 }}
-                  whileHover={{ scale: 1 }}
-                >
-                  <p className="text-gray-200 text-xs text-center leading-relaxed">
-                    {role.description}
-                  </p>
-                  <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 w-4 h-4 bg-slate-800 rotate-45 border-l border-t border-slate-700" />
-                </motion.div>
               </motion.div>
             ))}
           </div>
@@ -218,7 +206,7 @@ const GetInvolved = memo(function GetInvolved() {
             transition={{ duration: 0.3 }}
           >
             <motion.h2 
-              className="text-2xl sm:text-4xl font-bold text-white mb-6 sm:mb-8"
+              className="text-2xl sm:text-3xl font-bold text-white mb-5"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.6 }}
@@ -227,7 +215,7 @@ const GetInvolved = memo(function GetInvolved() {
             </motion.h2>
             
             <motion.p 
-              className="text-gray-300 text-lg sm:text-xl mb-8 sm:mb-12 max-w-2xl mx-auto font-light"
+              className="text-gray-300 text-lg sm:text-xl mb-5 max-w-2xl mx-auto font-light"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.8 }}

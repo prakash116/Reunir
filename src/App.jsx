@@ -12,6 +12,10 @@ import Parttnerships from "./Pages/Parttnerships";
 import OurPurpose from "./Pages/OurPurpose";
 import Sposorship from "./Pages/Sposorship";
 import About from "./Pages/About";
+import { HashRouter, Route, Routes } from "react-router-dom";
+import OurFounder from "./Components/OurFounder";
+import Subscriber from "./Components/Subscriber";
+import Footer from "./Components/Footer";
 
 function App() {
   const [isSticky, setIsSticky] = useState(false);
@@ -26,7 +30,7 @@ function App() {
   }, []);
 
   return (
-    <div>
+    <HashRouter>
       <PreHeader />
       <div className={isSticky ? "opacity-0" : "opacity-100"}>
         <Header />
@@ -40,18 +44,23 @@ function App() {
       >
         <Header />
       </div>
-      <LandingPage /> {}
-      <Home /> {}
-      <OurPurpose /> {}
-      <Parttnerships /> {}
-      <Sposorship /> {}
-      <About /> {}
-      <ContactUs /> {}
-      <Gallery /> {}
-      <PressMedia />
-      <DiversityInclusion />
-      <GetInvolved />
-    </div>
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/purpose" element={<OurPurpose />} />
+        <Route path="/parttnership" element={<Parttnerships />} />
+        <Route path="/sponsor" element={<Sposorship />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<ContactUs />} />
+        <Route path="/involved" element={<GetInvolved/>} />
+        <Route path="/founder" element={<OurFounder/>}/>
+        <Route path="/gallery" element={<Gallery />} />
+      </Routes>
+      <Subscriber/>
+      <Footer/>
+      {/* <PressMedia /> */}
+     
+    </HashRouter>
   );
 }
 

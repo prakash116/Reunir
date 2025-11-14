@@ -20,22 +20,20 @@ function LandingPage() {
   return (
     <div>
       <Home/>
-      <InvestmentCalculator/>
+      {/* <InvestmentCalculator/> */}
       <AboutUs/>
       <ChooseUs/>
-      <Guide/>
+      {/* <Guide/> */}
       <Advantage/>
       <InvestmentPlans/>
-      <InvestmentCalculator/>
-      <Transactions/>
+      {/* <InvestmentCalculator/> */}
+      {/* <Transactions/> */}
       <TransactionHistory/>
-      <OurSmartApp/>
+      {/* <OurSmartApp/> */}
       <Testimonial/>
-      <FAQ/>
+      {/* <FAQ/> */}
       <SignUp/>
       <GetInTouch/>
-      <Subscriber/>
-      <Footer/>
     </div>
   )
 }

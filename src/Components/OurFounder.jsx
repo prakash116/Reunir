@@ -35,7 +35,7 @@ const OurFounder = memo(function OurFounder() {
         variants={containerVariants}
       >
         <motion.h1 
-          className="text-4xl md:text-5xl font-bold text-orange-600 mb-4"
+          className="text-4xl md:text-4xl font-bold text-orange-600 mb-4"
           variants={itemVariants}
         >
           Our Founder
@@ -54,7 +54,7 @@ const OurFounder = memo(function OurFounder() {
           className="w-full lg:w-2/5 flex justify-center"
           variants={itemVariants}
         >
-          <div className="w-64 h-64 bg-gray-200 rounded-full shadow-lg flex items-center justify-center">
+          <div className="w-60 h-60 bg-gray-200 rounded-full shadow-lg flex items-center justify-center">
             <span className="text-gray-400 text-6xl">👤</span>
           </div>
         </motion.div>
@@ -65,21 +65,21 @@ const OurFounder = memo(function OurFounder() {
           variants={containerVariants}
         >
           <motion.h2 
-            className="text-2xl md:text-3xl font-bold text-gray-800 mb-4"
+            className="text-2xl md:text-2xl font-bold text-gray-800 mb-4"
             variants={itemVariants}
           >
             Founder & Visionary
           </motion.h2>
           
           <motion.h3 
-            className="text-xl md:text-2xl font-semibold text-orange-600 mb-6"
+            className="text-xl md:text-xl font-semibold text-orange-600 mb-6"
             variants={itemVariants}
           >
             S. Satnam Singh Matharu
           </motion.h3>
           
           <motion.p 
-            className="text-gray-600 text-lg leading-relaxed"
+            className="text-gray-600 leading-relaxed"
             variants={itemVariants}
           >
             Driven by a lifelong commitment to Sikh sports, S. Satnam Singh Matharu founded the 

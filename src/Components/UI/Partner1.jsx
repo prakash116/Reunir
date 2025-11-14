@@ -103,17 +103,14 @@ const Partner1 = memo(function Partner1() {
       >
         <motion.div variants={itemVariants}>
           <div className='inline-flex items-center justify-center gap-3 mb-4'>
-            <div className='w-12 h-12 bg-gradient-to-r from-orange-500 to-red-500 rounded-full flex items-center justify-center'>
-              <FaHandshake className='text-white text-xl' />
-            </div>
-            <span className='text-black font-bold text-3xl'>
+            <span className='text-black font-bold text-2xl'>
               Partnerships & Collaborations
             </span>
           </div>
         </motion.div>
 
         <motion.h1 
-          className='text-5xl font-bold bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent'
+          className='text-4xl font-bold bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent'
           variants={itemVariants}
         >
           ASGF Collaborates With

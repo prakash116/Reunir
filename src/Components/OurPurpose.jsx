@@ -93,10 +93,7 @@ const OurPurpose = memo(function OurPurpose() {
             className="inline-flex items-center gap-4 mb-6"
             variants={itemVariants}
           >
-            <div className="w-16 h-16 bg-gradient-to-r from-orange-500 to-red-500 rounded-2xl flex items-center justify-center shadow-2xl">
-              <span className="text-white text-2xl">🎯</span>
-            </div>
-            <h1 className="text-5xl md:text-6xl font-black bg-gradient-to-r from-orange-600 via-red-600 to-purple-600 bg-clip-text text-transparent">
+            <h1 className="text-4xl font-bold text-orange-500 bg-clip-text">
               Our Purpose
             </h1>
           </motion.div>
@@ -118,15 +115,15 @@ const OurPurpose = memo(function OurPurpose() {
                   className="flex items-center gap-4 mb-8"
                   variants={itemVariants}
                 >
-                  <div className="w-14 h-14 bg-gradient-to-r from-orange-500 to-red-500 rounded-2xl flex items-center justify-center shadow-lg">
-                    <span className="text-white text-xl">🎯</span>
+                  <div className="w-10 h-10 bg-gradient-to-r from-orange-500 to-red-500 rounded-lg flex items-center justify-center shadow-lg">
+                    <span className="text-white text-md">🎯</span>
                   </div>
-                  <h2 className="text-4xl font-black bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">
+                  <h2 className="text-2xl font-semibold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">
                     Mission
                   </h2>
                 </motion.div>
 
-                <div className="space-y-6 flex-1">
+                <div className="space-y-3 flex-1">
                   {missionItems.map((item, index) => (
                     <motion.div
                       key={index}
@@ -135,11 +132,11 @@ const OurPurpose = memo(function OurPurpose() {
                       whileHover="hover"
                     >
                       <div
-                        className={`w-12 h-12 bg-gradient-to-r ${item.gradient} rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 flex-shrink-0`}
+                        className={`w-10 h-10 bg-gradient-to-r ${item.gradient} rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 flex-shrink-0`}
                       >
-                        <span className="text-white text-lg">{item.icon}</span>
+                        <span className="text-white text-md">{item.icon}</span>
                       </div>
-                      <p className="text-gray-700 text-lg leading-relaxed font-medium group-hover:text-gray-900 transition-colors duration-300">
+                      <p className="text-gray-700 text-md leading-relaxed font-medium group-hover:text-gray-900 transition-colors duration-300">
                         {item.text}
                       </p>
                     </motion.div>
@@ -169,21 +166,21 @@ const OurPurpose = memo(function OurPurpose() {
                     className="flex items-center gap-4 mb-8"
                     variants={itemVariants}
                   >
-                    <div className="w-14 h-14 bg-gradient-to-r from-orange-500 to-red-500 rounded-2xl flex items-center justify-center shadow-2xl">
-                      <span className="text-white text-2xl">👁️</span>
+                    <div className="w-10 h-10 bg-gradient-to-r from-orange-500 to-red-500 rounded-lg flex items-center justify-center shadow-2xl">
+                      <span className="text-white text-md">👁️</span>
                     </div>
-                    <h2 className="text-4xl font-black text-black">Vision</h2>
+                    <h2 className="text-2xl font-semibold text-black">Vision</h2>
                   </motion.div>
 
                   <motion.div
-                    className="bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20 flex-1 flex flex-col justify-start gap-10 items-center"
+                    className="bg-white/10 p-4 backdrop-blur-sm rounded-2xl border border-white/20 flex-1 flex flex-col justify-start gap-4 items-center"
                     variants={itemVariants}
                   >
                     <div className="flex items-start gap-4 w-full">
-                      <span className="text-yellow-400 text-xl mt-1 flex-shrink-0">
+                      <span className="text-yellow-400 text-lg mt-1 flex-shrink-0">
                         ⭐
                       </span>
-                      <p className="text-black text-lg leading-relaxed font-medium">
+                      <p className="text-black text-md leading-relaxed font-medium">
                         To become the leading Sikh sports framework in Asia —
                         inspiring excellence, inclusion, and international
                         recognition — while nurturing generations of Sikh
@@ -191,10 +188,10 @@ const OurPurpose = memo(function OurPurpose() {
                       </p>
                     </div>
                     <div className="flex items-start gap-4 w-full">
-                      <span className="text-yellow-400 text-xl mt-1 flex-shrink-0">
+                      <span className="text-yellow-400 text-lg mt-1 flex-shrink-0">
                         ⭐
                       </span>
-                      <p className="text-black text-lg leading-relaxed font-medium">
+                      <p className="text-black text-md leading-relaxed font-medium">
                         To become the leading Sikh sports framework in Asia —
                         inspiring excellence, inclusion, and international
                         recognition — while nurturing generations of Sikh
@@ -202,10 +199,10 @@ const OurPurpose = memo(function OurPurpose() {
                       </p>
                     </div>
                     <div className="flex items-start gap-4 w-full">
-                      <span className="text-yellow-400 text-xl mt-1 flex-shrink-0">
+                      <span className="text-yellow-400 text-lg mt-1 flex-shrink-0">
                         ⭐
                       </span>
-                      <p className="text-black text-lg leading-relaxed font-medium">
+                      <p className="text-black text-md leading-relaxed font-medium">
                         To become the leading Sikh sports framework in Asia —
                         inspiring excellence, inclusion, and international
                         recognition — while nurturing generations of Sikh

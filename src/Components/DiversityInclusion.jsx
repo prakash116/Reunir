@@ -76,7 +76,7 @@ const DiversityInclusion = memo(function DiversityInclusion() {
           transition={{ duration: 0.6 }}
         >
           <motion.h1 
-            className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4"
+            className="text-3xl sm:text-4xl lg:text-4xl font-bold text-orange-600 mb-4"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
@@ -101,16 +101,16 @@ const DiversityInclusion = memo(function DiversityInclusion() {
 
         {/* Welcome Categories */}
         <motion.div 
-          className="mb-16 sm:mb-20 lg:mb-24"
+          className="mb-16 sm:mb-20 lg:mb-18"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
         >
           <motion.h2 
-            className="text-2xl sm:text-3xl font-bold text-gray-800 text-center mb-8 sm:mb-12"
+            className="text-2xl font-bold text-gray-800 text-center mb-8 sm:mb-12"
             variants={itemVariants}
           >
-            The Foundation Welcomes:
+            The Foundation Welcomes
           </motion.h2>
           
           <motion.div 

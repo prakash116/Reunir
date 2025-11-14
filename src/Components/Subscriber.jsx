@@ -23,7 +23,7 @@ function Subscriber() {
         <span className="inline-block text-white text-xl sm:text-2xl font-semibold mb-2">
           Subscribe to ASGF
         </span>
-        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-orange-600 mb-6">
+        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold text-orange-600 mb-6">
           To Get Exclusive Benefits
         </h1>
 

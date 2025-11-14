@@ -88,12 +88,20 @@ const WhyAsianSikhGames = memo(function WhyAsianSikhGames() {
           transition={{ duration: 0.6 }}
         >
           <motion.h1 
-            className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4"
+            className="text-3xl font-bold text-orange-600 mb-4"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            Why Asian Sikh Games?
+            About
+          </motion.h1>
+          <motion.h1 
+            className="text-3xl sm:text-4xl lg:text-4xl font-bold text-gray-900 mb-4"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            Why Asian Sikh Games ?
           </motion.h1>
           <motion.div 
             className="w-20 h-1 bg-gradient-to-r from-orange-500 to-yellow-500 mx-auto rounded-full"
@@ -150,30 +158,6 @@ const WhyAsianSikhGames = memo(function WhyAsianSikhGames() {
               </div>
             </motion.div>
           ))}
-        </motion.div>
-
-        {/* Bottom CTA */}
-        <motion.div 
-          className="text-center mt-12 sm:mt-16 lg:mt-20"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.8 }}
-        >
-          <motion.p 
-            className="text-gray-600 text-lg mb-6"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 1 }}
-          >
-            Join us in celebrating sports, culture, and community
-          </motion.p>
-          <motion.button
-            className="px-6 py-3 bg-gradient-to-r from-orange-500 to-yellow-500 text-white rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            Learn More
-          </motion.button>
         </motion.div>
       </div>
     </section>

@@ -44,7 +44,7 @@ const Investment = memo(function Investment() {
         className='text-2xl md:text-5xl font-bold text-orange-600'
         variants={itemVariants}
       >
-        Investment Offer
+       Sports Development Program
       </motion.span>
       
       <motion.p 

@@ -33,7 +33,7 @@ const SponsorshipOpportunities = memo(function SponsorshipOpportunities() {
   ];
 
   return (
-    <div className="w-full bg-zinc-300 max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-10">
+    <div className="w-full bg-zinc-200 max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-10">
       <motion.div 
         className="flex flex-col lg:flex-row gap-12 items-center"
         initial="hidden"
@@ -54,7 +54,7 @@ const SponsorshipOpportunities = memo(function SponsorshipOpportunities() {
           </motion.h1>
           
           <motion.p 
-            className="text-xl text-gray-600 leading-relaxed mb-8"
+            className="text-xl text-gray-700 leading-relaxed mb-8"
             variants={itemVariants}
           >
             ASGF invites individuals, corporates, and institutions to partner with us as sponsors for the upcoming 2026–2027 Asian Sikh Games events.
@@ -79,31 +79,6 @@ const SponsorshipOpportunities = memo(function SponsorshipOpportunities() {
               </motion.div>
             ))}
           </div>
-
-          {/* CTA Buttons */}
-          <motion.div 
-            className="flex flex-col sm:flex-row gap-4"
-            variants={itemVariants}
-          >
-            <motion.button
-              className="bg-orange-600 hover:bg-orange-700 text-white font-semibold py-3 px-6 rounded-full transition-colors duration-300 flex items-center justify-center gap-2 flex-1"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              transition={{ type: "spring", stiffness: 400, damping: 17 }}
-            >
-              <span>👉</span>
-              Become a Sponsor
-            </motion.button>
-            
-            <motion.button
-              className="bg-blue-900 hover:bg-gray-800 text-white font-semibold py-3 px-6 rounded-full border-2 border-orange-600 transition-colors duration-300 flex items-center justify-center gap-2 flex-1"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              transition={{ type: "spring", stiffness: 400, damping: 17 }}
-            >
-              Request Sponsorship Deck
-            </motion.button>
-          </motion.div>
         </motion.div>
 
         {/* Right Side - Image */}
