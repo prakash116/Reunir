@@ -16,6 +16,9 @@ import { HashRouter, Route, Routes } from "react-router-dom";
 import OurFounder from "./Components/OurFounder";
 import Subscriber from "./Components/Subscriber";
 import Footer from "./Components/Footer";
+import MemberForm from "./Components/MemberForm";
+import AthleteForm from "./Components/AthleteForm";
+import CoachForm from "./Components/CoachForm";
 
 function App() {
   const [isSticky, setIsSticky] = useState(false);
@@ -59,7 +62,9 @@ function App() {
       <Subscriber/>
       <Footer/>
       {/* <PressMedia /> */}
-     
+      <MemberForm/>
+      <AthleteForm/>
+      <CoachForm/>
     </HashRouter>
   );
 }
