@@ -55,7 +55,7 @@ const OurFounder = memo(function OurFounder() {
           variants={itemVariants}
         >
           <div className="w-60 h-60 bg-gray-200 rounded-full shadow-lg flex items-center justify-center">
-            <span className="text-gray-400 text-6xl">👤</span>
+            <img src="/Reunir/Founder.jpg" alt="" className='rounded-md'/>
           </div>
         </motion.div>
 
