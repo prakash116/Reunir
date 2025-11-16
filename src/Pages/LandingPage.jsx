@@ -32,7 +32,7 @@ function LandingPage() {
       {/* <OurSmartApp/> */}
       <Testimonial/>
       {/* <FAQ/> */}
-      <SignUp/>
+      {/* <SignUp/> */}
       <GetInTouch/>
     </div>
   )

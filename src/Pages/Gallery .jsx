@@ -44,7 +44,7 @@ const Gallery = memo(function Gallery() {
   };
 
   // Placeholder images array
-  const galleryImages = Array(6).fill(null);
+  const galleryImages = Array(10).fill(null);
 
   return (
     <div className="w-full max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
@@ -71,7 +71,7 @@ const Gallery = memo(function Gallery() {
 
         {/* Image Gallery Grid */}
         <motion.div 
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-12"
           variants={containerVariants}
         >
           {galleryImages.map((_, index) => (

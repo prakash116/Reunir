@@ -134,7 +134,7 @@ const FeaturesSlider = memo(function FeaturesSlider() {
                 exit="exit"
                 className="flex"
               >
-                <div className="flex gap-4 md:gap-6 w-full">
+                <div className="flex justify-center gap-4 md:gap-6 w-full">
                   {features
                     .slice(
                       currentIndex * itemsPerView,
@@ -143,13 +143,13 @@ const FeaturesSlider = memo(function FeaturesSlider() {
                     .map((feature, index) => (
                       <motion.div
                         key={`${feature.title}-${currentIndex}-${index}`}
-                        className="flex-1 min-w-0"
+                        className="flex w-full md:w-1/4"
                         variants={cardVariants}
                         initial="hidden"
                         animate="visible"
                         whileHover="hover"
                       >
-                        <div className="bg-gray-50 rounded-xl p-4 md:p-5 py-10 shadow-md border border-gray-200 text-center hover:shadow-lg transition-all duration-300">
+                        <div className="bg-gray-50 w-full rounded-xl p-4 md:p-5 py-10 shadow-md border border-gray-200 text-center hover:shadow-lg transition-all duration-300">
                           <motion.div 
                             className="flex justify-center mb-3"
                             whileHover={{ scale: 1.1 }}

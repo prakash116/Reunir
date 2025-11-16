@@ -10,7 +10,7 @@ function OurPurpose() {
       <OurPurpos/>
       <GoalsSection/>
       <InitiativesSection/>
-      <OurFounder/>
+      {/* <OurFounder/> */}
     </div>
   )
 }

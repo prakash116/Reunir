@@ -160,7 +160,7 @@ const GetInTouch = memo(function GetInTouch() {
               <div className='flex justify-center pt-2'>
                 <motion.button
                   type="submit"
-                  className="w-full bg-blue-900 text-white py-3 px-4 rounded-full border-2 border-orange-600 font-semibold text-lg hover:bg-gray-800 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center gap-3"
+                  className="w-full bg-orange-500 text-white py-3 px-4 rounded-full border-2 border-orange-600 font-semibold text-lg hover:bg-orange-600 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center gap-3"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >

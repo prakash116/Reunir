@@ -85,7 +85,7 @@ const Main = memo(function Main() {
           {["JOIN THE MOVEMENT", "SUPPORT", "PARTICIPATE"].map((text, index) => (
             <motion.button
               key={text}
-              className="bg-gradient-to-r from-blue-600 to-orange-500 text-white px-8 sm:px-12 py-3 sm:py-4 rounded-full text-base sm:text-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 focus:ring-offset-gray-900"
+              className=" bg-orange-500 shadow-sm shadow-white hover:bg-orange-600 text-white px-8 sm:px-7 py-3 sm:py-3 rounded-full text-base sm:text-md font-semibold focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 focus:ring-offset-gray-900"
               variants={buttonVariants}
               initial="initial"
               whileHover="hover"

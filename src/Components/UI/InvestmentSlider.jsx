@@ -23,7 +23,7 @@ const InvestmentSlider = memo(function InvestmentSlider() {
       bgColor: "bg-orange-500"
     },
     {
-      name: "Checkers / Mind Sports",
+      name: "Checkers",
       img: "https://images.unsplash.com/photo-1586165368501-56c5c3503406?w=400&h=200&fit=crop",
       icon: "♟️",
       bgColor: "bg-purple-500"
@@ -192,7 +192,7 @@ const InvestmentSlider = memo(function InvestmentSlider() {
                 exit="exit"
                 className="flex"
               >
-                <div className="flex gap-4 md:gap-6 w-full">
+                <div className="flex gap-4 justify-center md:gap-6 w-full">
                   {sports
                     .slice(
                       currentIndex * itemsPerView,
@@ -201,13 +201,13 @@ const InvestmentSlider = memo(function InvestmentSlider() {
                     .map((sport, index) => (
                       <motion.div
                         key={`${sport.name}-${currentIndex}-${index}`}
-                        className="flex-1 min-w-0"
+                        className="flex w-full md:w-1/4"
                         variants={cardVariants}
                         initial="hidden"
                         animate="visible"
                         whileHover="hover"
                       >
-                        <div className="bg-gray-50 flex flex-col items-center gap-3 rounded-xl pb-5 shadow-md border border-gray-200 text-center hover:shadow-xl transition-all duration-300 h-full">
+                        <div className="bg-gray-50 w-full flex flex-col items-center gap-3 rounded-xl pb-5 shadow-md border border-gray-200 text-center hover:shadow-xl transition-all duration-300 h-full">
                           <div className={`${sport.bgColor} rounded-b-full h-32 w-full overflow-hidden`}>
                             <motion.img 
                               src={sport.img} 
@@ -224,13 +224,13 @@ const InvestmentSlider = memo(function InvestmentSlider() {
                           <h3 className="text-xl md:text-2xl font-bold text-gray-800 mb-2 px-4 leading-tight">
                             {sport.name}
                           </h3>
-                          <motion.button 
+                          {/* <motion.button 
                             className='bg-blue-800 text-white font-semibold px-4 py-2 w-2/3 rounded-full border-2 border-orange-600 transition-colors hover:bg-blue-900'
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
                           >
                             Learn More
-                          </motion.button>
+                          </motion.button> */}
                         </div>
                       </motion.div>
                     ))
@@ -253,7 +253,7 @@ const InvestmentSlider = memo(function InvestmentSlider() {
               <FaChevronLeft className="text-lg" />
             </motion.button>
             
-            <div className="flex space-x-2 hidden md:block">
+            <div className="space-x-2 hidden md:flex">
               {Array.from({ length: totalSlides }).map((_, index) => (
                 <motion.button
                   key={index}

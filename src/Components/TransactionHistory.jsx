@@ -156,7 +156,7 @@ const UpcomingEvent = memo(function UpcomingEvent() {
           </motion.p>
 
           {/* Buttons with Icons */}
-          <motion.div 
+          {/* <motion.div 
             className="flex flex-col md:flex-row justify-center gap-4 items-center p-6 rounded-full border-2 border-orange-600 bg-white"
             variants={itemVariants}
           >
@@ -184,7 +184,7 @@ const UpcomingEvent = memo(function UpcomingEvent() {
               <FaTrophy className="text-lg" />
               Sports List
             </motion.button>
-          </motion.div>
+          </motion.div> */}
         </div>
       </motion.div>
 
@@ -361,7 +361,7 @@ const UpcomingEvent = memo(function UpcomingEvent() {
           </div>
         </motion.div>
       </div>
-      <motion.div 
+      {/* <motion.div 
         className="flex justify-center items-center pb-5"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -376,7 +376,7 @@ const UpcomingEvent = memo(function UpcomingEvent() {
         >
           VIEW ALL EVENTS
         </motion.a>
-      </motion.div>
+      </motion.div> */}
     </div>
   );
 });

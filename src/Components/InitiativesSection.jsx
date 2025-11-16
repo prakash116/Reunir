@@ -245,7 +245,7 @@ const InitiativesSection = memo(function InitiativesSection() {
         </motion.div>
 
         {/* Footer CTA */}
-        <motion.div 
+        {/* <motion.div 
           className="text-center mt-16"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -268,7 +268,7 @@ const InitiativesSection = memo(function InitiativesSection() {
           >
             Join Our Initiatives
           </motion.button>
-        </motion.div>
+        </motion.div> */}
       </div>
 
       {/* Custom Animation Styles */}
