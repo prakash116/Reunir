@@ -1,7 +1,232 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
 const AthleteForm = () => {
+  const navigate = useNavigate()
+  // Options according to your athlete schema
+  const salutationOptions = ['Mr', 'Mrs', 'Ms', 'Dr', 'Prof'];
+  const genderOptions = ['Male', 'Female', 'Other'];
+  const bloodGroupOptions = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'];
+  const levelOfSportOptions = ['Beginner', 'Intermediate', 'Advanced', 'Professional', 'Elite'];
+
+  // Form state
+  const [formData, setFormData] = useState({
+    aadharnumber: '',
+    email: '',
+    salutation: '',
+    name: '',
+    dob: '',
+    number: '',
+    address: '',
+    city: '',
+    state: '',
+    country: 'India',
+    pincode: '',
+    profession: '',
+    gender: '',
+    bloodgroup: '',
+    emgname: '',
+    emgnumber: '',
+    sportDiscipline: '',
+    levelOfSport: '',
+    sportsTitleEarned: '',
+    club: '',
+    achievements: ''
+  });
+
+  const [errors, setErrors] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [apiMessage, setApiMessage] = useState({ type: '', text: '' });
+
+  // Handle input changes
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [id]: value
+    }));
+    
+    // Clear error when user starts typing
+    if (errors[id]) {
+      setErrors(prev => ({
+        ...prev,
+        [id]: ''
+      }));
+    }
+
+    // Clear API message when user starts typing
+    if (apiMessage.text) {
+      setApiMessage({ type: '', text: '' });
+    }
+  };
+
+  // Validate form
+  const validateForm = () => {
+    const newErrors = {};
+
+    // Required fields validation (from your athlete schema)
+    if (!formData.aadharnumber.trim()) newErrors.aadharnumber = 'Aadhar number is required';
+    else if (!/^\d{12}$/.test(formData.aadharnumber)) newErrors.aadharnumber = 'Aadhar must be 12 digits';
+
+    if (!formData.email.trim()) newErrors.email = 'Email is required';
+    else if (!/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(formData.email)) newErrors.email = 'Invalid email format';
+
+    if (!formData.name.trim()) newErrors.name = 'Name is required';
+
+    if (!formData.number.trim()) newErrors.number = 'Phone number is required';
+    else if (!/^\d{10}$/.test(formData.number)) newErrors.number = 'Phone must be 10 digits';
+
+    if (!formData.gender) newErrors.gender = 'Gender is required';
+
+    // Athlete-specific required fields
+    if (!formData.sportDiscipline.trim()) newErrors.sportDiscipline = 'Sport discipline is required';
+    if (!formData.levelOfSport) newErrors.levelOfSport = 'Level of sport is required';
+
+    // Optional field validations
+    if (formData.pincode && !/^\d{6}$/.test(formData.pincode)) newErrors.pincode = 'PIN code must be 6 digits';
+    if (formData.emgnumber && !/^\d{10}$/.test(formData.emgnumber)) newErrors.emgnumber = 'Emergency contact must be 10 digits';
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  // Handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setApiMessage({ type: '', text: '' });
+    
+    if (!validateForm()) {
+      setApiMessage({ type: 'error', text: 'Please fix the errors above' });
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      // Prepare data for API according to athlete schema
+      const submitData = {
+        aadharnumber: formData.aadharnumber.trim(),
+        email: formData.email.toLowerCase().trim(),
+        salutation: formData.salutation || 'Mr',
+        name: formData.name.trim(),
+        dob: formData.dob || null,
+        number: formData.number.trim(),
+        address: formData.address?.trim() || '',
+        city: formData.city?.trim() || '',
+        state: formData.state?.trim() || '',
+        country: formData.country?.trim() || 'India',
+        pincode: formData.pincode?.trim() || '',
+        profession: formData.profession?.trim() || '',
+        gender: formData.gender,
+        bloodgroup: formData.bloodgroup?.toUpperCase() || '',
+        emgname: formData.emgname?.trim() || '',
+        emgnumber: formData.emgnumber?.trim() || '',
+        sportDiscipline: formData.sportDiscipline.trim(),
+        levelOfSport: formData.levelOfSport,
+        sportsTitleEarned: formData.sportsTitleEarned?.trim() || '',
+        club: formData.club?.trim() || '',
+        achievements: formData.achievements?.trim() || ''
+      };
+
+      console.log('Submitting athlete data:', submitData);
+
+      const response = await fetch('http://localhost:8585/athlete', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(submitData),
+      });
+
+      const result = await response.json();
+      console.log('API Response:', result);
+
+      if (result.success) {
+        setApiMessage({ 
+          type: 'success', 
+          text: result.message || 'Athlete registered successfully!' 
+        });
+        navigate('/')
+        // Reset form
+        setFormData({
+          aadharnumber: '',
+          email: '',
+          salutation: '',
+          name: '',
+          dob: '',
+          number: '',
+          address: '',
+          city: '',
+          state: '',
+          country: 'India',
+          pincode: '',
+          profession: '',
+          gender: '',
+          bloodgroup: '',
+          emgname: '',
+          emgnumber: '',
+          sportDiscipline: '',
+          levelOfSport: '',
+          sportsTitleEarned: '',
+          club: '',
+          achievements: ''
+        });
+      } else {
+        // Handle API errors
+        if (result.errors && Array.isArray(result.errors)) {
+          setApiMessage({ 
+            type: 'error', 
+            text: result.errors.join(', ') 
+          });
+        } else if (result.missingFields && Array.isArray(result.missingFields)) {
+          setApiMessage({ 
+            type: 'error', 
+            text: `Missing required fields: ${result.missingFields.join(', ')}` 
+          });
+        } else {
+          setApiMessage({ 
+            type: 'error', 
+            text: result.message || 'Failed to register athlete. Please try again.' 
+          });
+        }
+      }
+    } catch (error) {
+      console.error('Submission error:', error);
+      setApiMessage({ 
+        type: 'error', 
+        text: 'Network error. Please check your connection and try again.' 
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  // API Message component
+  const ApiMessage = () => {
+    if (!apiMessage.text) return null;
+
+    const styles = {
+      success: 'bg-green-50 border border-green-200 text-green-800',
+      error: 'bg-red-50 border border-red-200 text-red-800'
+    };
+
+    return (
+      <motion.div
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        className={`p-4 rounded-lg mb-6 ${styles[apiMessage.type]}`}
+      >
+        <div className="flex items-center">
+          <span className="font-medium">
+            {apiMessage.type === 'success' ? 'Success!' : 'Error!'}
+          </span>
+          <span className="ml-2">{apiMessage.text}</span>
+        </div>
+      </motion.div>
+    );
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -15,7 +240,10 @@ const AthleteForm = () => {
             Athlete Registration
           </h1>
 
-          <form className="space-y-8">
+          <form onSubmit={handleSubmit} className="space-y-8">
+            {/* API Message */}
+            <ApiMessage />
+
             {/* Personal & Contact Details Section */}
             <section className="space-y-6">
               <h2 className="text-xl font-semibold text-gray-800 border-b border-gray-200 pb-2">
@@ -25,138 +253,174 @@ const AthleteForm = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                 {/* Aadhaar */}
                 <div className="md:col-span-2">
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Aadhaar
+                  <label htmlFor="aadharnumber" className="block text-sm font-medium text-gray-700 mb-1">
+                    Aadhaar Number *
                   </label>
                   <input
                     type="text"
-                    className="w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                    placeholder="Enter Aadhaar number"
+                    id="aadharnumber"
+                    value={formData.aadharnumber}
+                    onChange={handleChange}
+                    className={`w-full rounded-md border px-3 py-2 shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                      errors.aadharnumber ? 'border-red-500' : 'border-gray-300'
+                    }`}
+                    placeholder="Enter 12-digit Aadhaar number"
+                    maxLength="12"
                   />
+                  {errors.aadharnumber && <p className="text-red-500 text-sm mt-1">{errors.aadharnumber}</p>}
                 </div>
 
                 {/* Salutation */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="salutation" className="block text-sm font-medium text-gray-700 mb-1">
                     Salutation
                   </label>
-                  <select className="w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                  <select 
+                    id="salutation"
+                    value={formData.salutation}
+                    onChange={handleChange}
+                    className="w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  >
                     <option value="">Select</option>
-                    <option value="Master">Master</option>
-                    <option value="Ms">Ms</option>
-                    <option value="Mr.">Mr.</option>
-                    <option value="Mrs">Mrs</option>
-                    <option value="Sardar">Sardar</option>
-                    <option value="Sardarni">Sardarni</option>
-                    <option value="Dr.">Dr.</option>
-                    <option value="Prof.">Prof.</option>
-                    <option value="Adv.">Adv.</option>
+                    {salutationOptions.map((option) => (
+                      <option key={option} value={option}>{option}</option>
+                    ))}
                   </select>
                 </div>
 
                 {/* Name */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Name
+                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                    Name *
                   </label>
                   <input
                     type="text"
-                    className="w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    id="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    className={`w-full rounded-md border px-3 py-2 shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                      errors.name ? 'border-red-500' : 'border-gray-300'
+                    }`}
                     placeholder="Full name"
                   />
+                  {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
                 </div>
 
                 {/* Email Address */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Email Address
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                    Email Address *
                   </label>
                   <input
                     type="email"
-                    className="w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    id="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    className={`w-full rounded-md border px-3 py-2 shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                      errors.email ? 'border-red-500' : 'border-gray-300'
+                    }`}
                     placeholder="email@example.com"
                   />
+                  {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
                 </div>
 
                 {/* Date of Birth */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="dob" className="block text-sm font-medium text-gray-700 mb-1">
                     Date of Birth
                   </label>
                   <input
                     type="date"
+                    id="dob"
+                    value={formData.dob}
+                    onChange={handleChange}
                     className="w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   />
                 </div>
 
                 {/* Contact Mobile Number */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Contact Mobile Number
+                  <label htmlFor="number" className="block text-sm font-medium text-gray-700 mb-1">
+                    Contact Mobile Number *
                   </label>
                   <input
                     type="tel"
-                    className="w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                    placeholder="+91 "
+                    id="number"
+                    value={formData.number}
+                    onChange={handleChange}
+                    className={`w-full rounded-md border px-3 py-2 shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                      errors.number ? 'border-red-500' : 'border-gray-300'
+                    }`}
+                    placeholder="Enter 10-digit mobile number"
+                    maxLength="10"
                   />
+                  {errors.number && <p className="text-red-500 text-sm mt-1">{errors.number}</p>}
                 </div>
 
                 {/* Gender */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Gender
+                  <label htmlFor="gender" className="block text-sm font-medium text-gray-700 mb-1">
+                    Gender *
                   </label>
-                  <select className="w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                  <select 
+                    id="gender"
+                    value={formData.gender}
+                    onChange={handleChange}
+                    className={`w-full rounded-md border px-3 py-2 shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                      errors.gender ? 'border-red-500' : 'border-gray-300'
+                    }`}
+                  >
                     <option value="">Select</option>
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                    <option value="Other">Other</option>
+                    {genderOptions.map((option) => (
+                      <option key={option} value={option}>{option}</option>
+                    ))}
                   </select>
+                  {errors.gender && <p className="text-red-500 text-sm mt-1">{errors.gender}</p>}
                 </div>
 
                 {/* Blood Group */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="bloodgroup" className="block text-sm font-medium text-gray-700 mb-1">
                     Blood Group
                   </label>
-                  <input
-                    type="text"
+                  <select 
+                    id="bloodgroup"
+                    value={formData.bloodgroup}
+                    onChange={handleChange}
                     className="w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                    placeholder="e.g., O+"
-                  />
+                  >
+                    <option value="">Select</option>
+                    {bloodGroupOptions.map((option) => (
+                      <option key={option} value={option}>{option}</option>
+                    ))}
+                  </select>
                 </div>
 
                 {/* Profession */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="profession" className="block text-sm font-medium text-gray-700 mb-1">
                     Profession
                   </label>
                   <input
                     type="text"
+                    id="profession"
+                    value={formData.profession}
+                    onChange={handleChange}
                     className="w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     placeholder="Your profession"
                   />
                 </div>
 
-                {/* Are you a Sports Person? */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Are you a Sports Person?
-                  </label>
-                  <select className="w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                    <option value="">Select</option>
-                    <option value="Yes">Yes</option>
-                    <option value="No">No</option>
-                  </select>
-                </div>
-
                 {/* House Number & Street Address */}
                 <div className="md:col-span-2">
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="address" className="block text-sm font-medium text-gray-700 mb-1">
                     House Number & Street Address
                   </label>
                   <input
                     type="text"
+                    id="address"
+                    value={formData.address}
+                    onChange={handleChange}
                     className="w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     placeholder="Full address"
                   />
@@ -164,11 +428,14 @@ const AthleteForm = () => {
 
                 {/* City */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="city" className="block text-sm font-medium text-gray-700 mb-1">
                     City
                   </label>
                   <input
                     type="text"
+                    id="city"
+                    value={formData.city}
+                    onChange={handleChange}
                     className="w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     placeholder="City"
                   />
@@ -176,11 +443,14 @@ const AthleteForm = () => {
 
                 {/* State */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="state" className="block text-sm font-medium text-gray-700 mb-1">
                     State
                   </label>
                   <input
                     type="text"
+                    id="state"
+                    value={formData.state}
+                    onChange={handleChange}
                     className="w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     placeholder="State"
                   />
@@ -188,11 +458,14 @@ const AthleteForm = () => {
 
                 {/* Country */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="country" className="block text-sm font-medium text-gray-700 mb-1">
                     Country
                   </label>
                   <input
                     type="text"
+                    id="country"
+                    value={formData.country}
+                    onChange={handleChange}
                     className="w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     placeholder="Country"
                   />
@@ -200,23 +473,33 @@ const AthleteForm = () => {
 
                 {/* PIN Code */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="pincode" className="block text-sm font-medium text-gray-700 mb-1">
                     PIN Code
                   </label>
                   <input
                     type="text"
-                    className="w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                    placeholder="PIN code"
+                    id="pincode"
+                    value={formData.pincode}
+                    onChange={handleChange}
+                    className={`w-full rounded-md border px-3 py-2 shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                      errors.pincode ? 'border-red-500' : 'border-gray-300'
+                    }`}
+                    placeholder="6-digit PIN code"
+                    maxLength="6"
                   />
+                  {errors.pincode && <p className="text-red-500 text-sm mt-1">{errors.pincode}</p>}
                 </div>
 
                 {/* Emergency Contact Name */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="emgname" className="block text-sm font-medium text-gray-700 mb-1">
                     Emergency Contact Name
                   </label>
                   <input
                     type="text"
+                    id="emgname"
+                    value={formData.emgname}
+                    onChange={handleChange}
                     className="w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     placeholder="Emergency contact name"
                   />
@@ -224,14 +507,21 @@ const AthleteForm = () => {
 
                 {/* Emergency Contact Mobile Number */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="emgnumber" className="block text-sm font-medium text-gray-700 mb-1">
                     Emergency Contact Mobile Number
                   </label>
                   <input
                     type="tel"
-                    className="w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                    placeholder="Emergency contact number"
+                    id="emgnumber"
+                    value={formData.emgnumber}
+                    onChange={handleChange}
+                    className={`w-full rounded-md border px-3 py-2 shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                      errors.emgnumber ? 'border-red-500' : 'border-gray-300'
+                    }`}
+                    placeholder="10-digit emergency number"
+                    maxLength="10"
                   />
+                  {errors.emgnumber && <p className="text-red-500 text-sm mt-1">{errors.emgnumber}</p>}
                 </div>
               </div>
             </section>
@@ -245,50 +535,68 @@ const AthleteForm = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                 {/* Sport Discipline */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Sport Discipline
+                  <label htmlFor="sportDiscipline" className="block text-sm font-medium text-gray-700 mb-1">
+                    Sport Discipline *
                   </label>
                   <input
                     type="text"
-                    className="w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    id="sportDiscipline"
+                    value={formData.sportDiscipline}
+                    onChange={handleChange}
+                    className={`w-full rounded-md border px-3 py-2 shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                      errors.sportDiscipline ? 'border-red-500' : 'border-gray-300'
+                    }`}
                     placeholder="e.g., Athletics, Swimming"
                   />
+                  {errors.sportDiscipline && <p className="text-red-500 text-sm mt-1">{errors.sportDiscipline}</p>}
                 </div>
 
                 {/* Level of Sport */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Level of Sport
+                  <label htmlFor="levelOfSport" className="block text-sm font-medium text-gray-700 mb-1">
+                    Level of Sport *
                   </label>
-                  <select className="w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                  <select 
+                    id="levelOfSport"
+                    value={formData.levelOfSport}
+                    onChange={handleChange}
+                    className={`w-full rounded-md border px-3 py-2 shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                      errors.levelOfSport ? 'border-red-500' : 'border-gray-300'
+                    }`}
+                  >
                     <option value="">Select</option>
-                    <option value="School">School</option>
-                    <option value="University">University</option>
-                    <option value="City">City</option>
-                    <option value="State">State</option>
-                    <option value="Country">Country</option>
+                    {levelOfSportOptions.map((option) => (
+                      <option key={option} value={option}>{option}</option>
+                    ))}
                   </select>
+                  {errors.levelOfSport && <p className="text-red-500 text-sm mt-1">{errors.levelOfSport}</p>}
                 </div>
 
                 {/* Sports Title Earned */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="sportsTitleEarned" className="block text-sm font-medium text-gray-700 mb-1">
                     Sports Title Earned
                   </label>
                   <input
                     type="text"
+                    id="sportsTitleEarned"
+                    value={formData.sportsTitleEarned}
+                    onChange={handleChange}
                     className="w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                    placeholder="e.g., Black Belt, Grand Master"
+                    placeholder="e.g., National Champion, Gold Medalist"
                   />
                 </div>
 
-                {/* Name of Team/Club/Federation/Association */}
+                {/* Club */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Team/Club/Federation/Association
+                  <label htmlFor="club" className="block text-sm font-medium text-gray-700 mb-1">
+                    Club/Team/Federation
                   </label>
                   <input
                     type="text"
+                    id="club"
+                    value={formData.club}
+                    onChange={handleChange}
                     className="w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     placeholder="Organization name"
                   />
@@ -296,11 +604,14 @@ const AthleteForm = () => {
 
                 {/* Sports Achievements */}
                 <div className="md:col-span-2">
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="achievements" className="block text-sm font-medium text-gray-700 mb-1">
                     Sports Achievements
                   </label>
                   <textarea
+                    id="achievements"
                     rows={4}
+                    value={formData.achievements}
+                    onChange={handleChange}
                     className="w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     placeholder="Medals, awards, accomplishments..."
                   />
@@ -312,9 +623,10 @@ const AthleteForm = () => {
             <div className="flex justify-center pt-4">
               <button
                 type="submit"
-                className="w-full md:w-auto px-8 py-3 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 shadow-sm transition-colors"
+                disabled={isSubmitting}
+                className="w-full md:w-auto px-8 py-3 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 shadow-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Register Athlete
+                {isSubmitting ? 'Registering...' : 'Register Athlete'}
               </button>
             </div>
           </form>

@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from "react";
 import LandingPage from "./Pages/LandingPage";
-import PressMedia from "./Components/Press&Media";
 import ContactUs from "./Pages/ContactUs";
 import Gallery from "./Pages/Gallery ";
-import DiversityInclusion from "./Components/DiversityInclusion";
 import GetInvolved from "./Components/GetInvolved";
 import PreHeader from "./Components/PreHeader";
 import Header from "./Components/Header";
-import Home from "./Pages/Home";
 import Parttnerships from "./Pages/Parttnerships";
 import OurPurpose from "./Pages/OurPurpose";
 import Sposorship from "./Pages/Sposorship";
@@ -19,6 +16,10 @@ import Footer from "./Components/Footer";
 import MemberForm from "./Components/MemberForm";
 import AthleteForm from "./Components/AthleteForm";
 import CoachForm from "./Components/CoachForm";
+import DataTable from "./Pages/ContactList";
+import NewRegisterMembers from "./Pages/NewRegisterMembers";
+import NewRegisterAthlets from "./Pages/NewRegisterAthletes";
+import NewRegisterCoachs from "./Pages/NewRegisterCoachs";
 
 function App() {
   const [isSticky, setIsSticky] = useState(false);
@@ -40,9 +41,7 @@ function App() {
       </div>
       <div
         className={`fixed top-0 left-0 right-0 z-50 transform transition-transform duration-300 ${
-          isSticky
-            ? "translate-y-0 shadow-lg"
-            : "-translate-y-full"
+          isSticky ? "translate-y-0 shadow-lg" : "-translate-y-full"
         }`}
       >
         <Header />
@@ -54,16 +53,19 @@ function App() {
         <Route path="/sponsor" element={<Sposorship />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<ContactUs />} />
-        <Route path="/involved" element={<GetInvolved/>} />
-        <Route path="/founder" element={<OurFounder/>}/>
+        <Route path="/involved" element={<GetInvolved />} />
+        <Route path="/founder" element={<OurFounder />} />
         <Route path="/gallery" element={<Gallery />} />
+        <Route path="/memberform" element={<MemberForm/>}/>
+        <Route path="/athleteform" element={<AthleteForm/>} />
+        <Route path="/coachform" element={<CoachForm/>} />
       </Routes>
-      <Subscriber/>
-      <Footer/>
-      {/* <PressMedia /> */}
-      <MemberForm/>
-      <AthleteForm/>
-      <CoachForm/>
+      <Subscriber />
+      <Footer />
+      <DataTable />
+      <NewRegisterMembers />
+      <NewRegisterAthlets />
+      <NewRegisterCoachs />
     </HashRouter>
   );
 }

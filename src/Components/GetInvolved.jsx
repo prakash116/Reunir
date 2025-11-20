@@ -1,7 +1,23 @@
 import { motion } from 'framer-motion';
 import { memo } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const GetInvolved = memo(function GetInvolved() {
+  const navigate = useNavigate()
+
+  const handleMember = () => {
+    navigate('/memberform')
+  }
+
+  const handleAthlete = () => {
+    navigate('/athleteform')
+  }
+
+  const handleCoach = () => {
+    navigate('/coachform')
+  }
+
+
   const roles = [
     {
       icon: "🏃‍♂️",
@@ -97,7 +113,7 @@ const GetInvolved = memo(function GetInvolved() {
   };
 
   return (
-    <section className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 py-8 px-4 sm:px-6 lg:px-8 overflow-hidden relative">
+    <section className="min-h-screen bg-white py-8 px-4 sm:px-6 lg:px-8 overflow-hidden relative">
       {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div
@@ -136,7 +152,7 @@ const GetInvolved = memo(function GetInvolved() {
             GET INVOLVED
           </motion.h1>
           <motion.p
-            className="text-lg sm:text-xl text-gray-300 max-w-2xl mx-auto mb-4 font-light tracking-wide"
+            className="text-lg sm:text-xl text-gray-900 max-w-2xl mx-auto mb-4 font-light tracking-wide"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.4 }}
@@ -167,7 +183,7 @@ const GetInvolved = memo(function GetInvolved() {
                 className="group relative"
               >
                 {/* Main Circular Card */}
-                <div className="relative w-32 h-32 sm:w-40 sm:h-40 lg:w-48 lg:h-48 rounded-full bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700 shadow-2xl flex flex-col items-center justify-center p-4 backdrop-blur-sm">
+                <div className="relative w-32 h-32 sm:w-40 sm:h-40 lg:w-48 lg:h-48 rounded-full bg-gradient-to-br from-slate-400 to-slate-500 border border-slate-600 shadow-2xl flex flex-col items-center justify-center p-4 backdrop-blur-sm">
                   {/* Gradient Border on Hover */}
                   <div className={`absolute inset-0 rounded-full bg-gradient-to-br ${role.color} opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-sm -z-10`} />
                   
@@ -201,7 +217,7 @@ const GetInvolved = memo(function GetInvolved() {
           transition={{ duration: 0.8, delay: 0.4 }}
         >
           <motion.div 
-            className="bg-slate-800/30 backdrop-blur-lg rounded-3xl border border-slate-700/50 p-8 sm:p-12 max-w-4xl mx-auto shadow-2xl"
+            className="bg-slate-800 backdrop-blur-lg rounded-3xl border border-slate-600 p-8 sm:p-12 mx-auto shadow-2xl"
             whileHover={{ scale: 1.02 }}
             transition={{ duration: 0.3 }}
           >
@@ -211,11 +227,11 @@ const GetInvolved = memo(function GetInvolved() {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.6 }}
             >
-              Ready to <span className="bg-gradient-to-r from-cyan-400 to-pink-400 bg-clip-text text-transparent">Make Impact?</span>
+              Ready to Make Impact
             </motion.h2>
             
             <motion.p 
-              className="text-gray-300 text-lg sm:text-xl mb-5 max-w-2xl mx-auto font-light"
+              className="text-gray-200 text-lg sm:text-xl mb-5 max-w-2xl mx-auto font-light"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.8 }}
@@ -230,30 +246,33 @@ const GetInvolved = memo(function GetInvolved() {
               animate="visible"
             >
               <motion.button
+                onClick={handleMember}
                 variants={buttonVariants}
                 whileHover="hover"
                 whileTap="tap"
-                className="px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-2xl font-bold text-lg shadow-2xl hover:shadow-cyan-500/25 transition-all duration-300 flex items-center gap-3 group"
+                className="px-12 py-4 bg-orange-600 text-white rounded-2xl font-bold text-lg shadow-2xl hover:shadow-cyan-500/25 transition-all duration-300 flex items-center gap-3 group"
               >
-                REGISTER NOW
+                Join Member
               </motion.button>
-              
-              <motion.button
+
+               <motion.button
+               onClick={handleAthlete}
                 variants={buttonVariants}
                 whileHover="hover"
                 whileTap="tap"
-                className="px-8 py-4 bg-gradient-to-r from-purple-500 to-pink-600 text-white rounded-2xl font-bold text-lg shadow-2xl hover:shadow-purple-500/25 transition-all duration-300 flex items-center gap-3"
+                className="px-14 py-4 bg-orange-600 text-white rounded-2xl font-bold text-lg shadow-2xl hover:shadow-cyan-500/25 transition-all duration-300 flex items-center gap-3 group"
               >
-                COLLABORATE
+                Join Athlete
               </motion.button>
-              
-              <motion.button
+
+               <motion.button
+               onClick={handleCoach}
                 variants={buttonVariants}
                 whileHover="hover"
                 whileTap="tap"
-                className="px-8 py-4 bg-gradient-to-r from-emerald-500 to-green-600 text-white rounded-2xl font-bold text-lg shadow-2xl hover:shadow-emerald-500/25 transition-all duration-300 flex items-center gap-3"
+                className="px-14 py-4 bg-orange-600 text-white rounded-2xl font-bold text-lg shadow-2xl hover:shadow-cyan-500/25 transition-all duration-300 flex items-center gap-3 group"
               >
-                SUPPORT US
+                Join Coach
               </motion.button>
             </motion.div>
           </motion.div>
