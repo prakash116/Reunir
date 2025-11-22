@@ -8,5 +8,20 @@ export default defineConfig({
     react(),
     tailwindcss(),
   ],
-  base: '/Reunir/',
+
+  base: '/Reunir/', // keep your project base
+
+  server: {
+    // 🔥 Fix refresh page 404 for BrowserRouter
+    historyApiFallback: true,
+  },
+
+  build: {
+    // For deployments where SPA routing is needed
+    rollupOptions: {
+      output: {
+        manualChunks: undefined,
+      },
+    },
+  },
 })

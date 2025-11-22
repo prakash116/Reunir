@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { motion } from 'framer-motion';
 
-const API_URL = 'http://localhost:8585/member';
+const API_URL = 'http://localhost:8787/member';
 
 const NewRegisterMembers = () => {
   const [members, setMembers] = useState([]);

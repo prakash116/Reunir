@@ -9,7 +9,7 @@ import Parttnerships from "./Pages/Parttnerships";
 import OurPurpose from "./Pages/OurPurpose";
 import Sposorship from "./Pages/Sposorship";
 import About from "./Pages/About";
-import { HashRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import OurFounder from "./Components/OurFounder";
 import Subscriber from "./Components/Subscriber";
 import Footer from "./Components/Footer";
@@ -20,6 +20,8 @@ import DataTable from "./Pages/ContactList";
 import NewRegisterMembers from "./Pages/NewRegisterMembers";
 import NewRegisterAthlets from "./Pages/NewRegisterAthletes";
 import NewRegisterCoachs from "./Pages/NewRegisterCoachs";
+import Admin from "./Pages/admin";
+import AdminLayout from "./Pages/Admin/AdminLayout";
 
 function App() {
   const [isSticky, setIsSticky] = useState(false);
@@ -34,7 +36,7 @@ function App() {
   }, []);
 
   return (
-    <HashRouter>
+    <BrowserRouter basename="/Reunir">
       <PreHeader />
       <div className={isSticky ? "opacity-0" : "opacity-100"}>
         <Header />
@@ -56,17 +58,20 @@ function App() {
         <Route path="/involved" element={<GetInvolved />} />
         <Route path="/founder" element={<OurFounder />} />
         <Route path="/gallery" element={<Gallery />} />
-        <Route path="/memberform" element={<MemberForm/>}/>
-        <Route path="/athleteform" element={<AthleteForm/>} />
-        <Route path="/coachform" element={<CoachForm/>} />
+        <Route path="/memberform" element={<MemberForm />} />
+        <Route path="/athleteform" element={<AthleteForm />} />
+        <Route path="/coachform" element={<CoachForm />} />
+        <Route path="/admin" element={<AdminLayout/>}>
+          <Route index element={<Admin />} />
+          <Route path="querylist" element={<DataTable />} />
+          <Route path="memberlist" element={<NewRegisterMembers />} />
+          <Route path="athletelist" element={<NewRegisterAthlets />} />
+          <Route path="coachlist" element={<NewRegisterCoachs />} />
+        </Route>
       </Routes>
       <Subscriber />
       <Footer />
-      <DataTable />
-      <NewRegisterMembers />
-      <NewRegisterAthlets />
-      <NewRegisterCoachs />
-    </HashRouter>
+    </BrowserRouter>
   );
 }
 
