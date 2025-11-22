@@ -72,10 +72,10 @@ const Download = React.memo(
 );
 
 // API URLs
-const queryapi = "http://localhost:8787/download/contact";
-const memberapi = "http://localhost:8787/download/member";
-const athleteapi = "http://localhost:8787/download/athlete";
-const coachapi = "http://localhost:8787/download/coach";
+const queryapi = "https://asgf.onrender.com/download/contact";
+const memberapi = "https://asgf.onrender.com/download/member";
+const athleteapi = "https://asgf.onrender.com/download/athlete";
+const coachapi = "https://asgf.onrender.com/download/coach";
 
 export const QuerySheet = React.memo(() => (
   <Download url={queryapi}>Download Contacts</Download>
