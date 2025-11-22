@@ -36,7 +36,7 @@ function App() {
   }, []);
 
   return (
-    <BrowserRouter basename="/Reunir">
+    <BrowserRouter>
       <PreHeader />
       <div className={isSticky ? "opacity-0" : "opacity-100"}>
         <Header />
