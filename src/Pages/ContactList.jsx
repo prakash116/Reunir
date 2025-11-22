@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 
 const API_URL = 'http://localhost:8787/contact';
 
-const DataTable = () => {
+const ContactList = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -36,22 +36,18 @@ const DataTable = () => {
       }
 
       const result = await response.json();
-      console.log('API Response:', result); // Debug log
+      console.log('API Response:', result);
       
-      // Check the actual API response structure
-      const contacts = result.data || result; // Handle both response formats
-      
-      // Transform data to ensure we have all required fields with fallbacks
+      const contacts = result.data || result;
       const transformedData = Array.isArray(contacts) ? contacts.map((item, index) => ({
         id: item._id || item.id || index,
         name: item.name || 'N/A',
         email: item.email || 'N/A',
-        number: item.number || item.phone || 'N/A', // Fixed: using 'number' as per your schema
+        number: item.number || item.phone || 'N/A',
         createdAt: item.createdAt || new Date().toISOString(),
         message: item.message || item.description || 'No message',
       })) : [];
 
-      console.log('Transformed Data:', transformedData); // Debug log
       setData(transformedData);
     } catch (err) {
       if (err.name !== 'AbortError') {
@@ -129,14 +125,20 @@ const DataTable = () => {
     fetchData();
   }, [fetchData]);
 
+  // Get sort indicator
+  const getSortIndicator = useCallback((key) => {
+    if (sortConfig.key !== key) return '↕';
+    return sortConfig.direction === 'asc' ? '↑' : '↓';
+  }, [sortConfig]);
+
   // Table headers configuration
   const tableHeaders = useMemo(() => [
-    { key: 'sno', label: 'S.No.', sortable: false },
-    { key: 'name', label: 'Name', sortable: true },
-    { key: 'email', label: 'Email', sortable: true },
-    { key: 'number', label: 'Phone No.', sortable: true }, // Fixed: using 'number'
-    { key: 'createdAt', label: 'Apply Date', sortable: true },
-    { key: 'message', label: 'Message', sortable: false },
+    { key: 'sno', label: 'S.No.', sortable: false, mobile: true },
+    { key: 'name', label: 'Name', sortable: true, mobile: true },
+    { key: 'email', label: 'Email', sortable: true, mobile: false },
+    { key: 'number', label: 'Phone No.', sortable: true, mobile: true },
+    { key: 'createdAt', label: 'Apply Date', sortable: true, mobile: true },
+    { key: 'message', label: 'Message', sortable: false, mobile: true },
   ], []);
 
   // Format date
@@ -152,86 +154,137 @@ const DataTable = () => {
     }
   }, []);
 
-  // Loading state
+  // Total pages calculation
+  const totalPages = Math.ceil(sortedData.length / itemsPerPage);
+
+  // Loading UI
   if (loading) {
     return (
-      <div className="flex justify-center items-center min-h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      <div className="min-h-96 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading contacts data...</p>
+        </div>
       </div>
     );
   }
 
-  // Error state
+  // Error UI
   if (error) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-64 p-4">
-        <div className="text-red-600 text-lg mb-4">Error: {error}</div>
-        <button
-          onClick={handleRetry}
-          className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition-colors"
-        >
-          Retry
-        </button>
+      <div className="min-h-96 flex items-center justify-center">
+        <div className="text-center max-w-md mx-auto p-6">
+          <div className="text-red-500 text-4xl mb-4">⚠️</div>
+          <h3 className="text-lg font-semibold text-red-600 mb-2">Error Loading Data</h3>
+          <p className="text-gray-600 mb-4">{error}</p>
+          <button
+            onClick={handleRetry}
+            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition-colors duration-200"
+          >
+            Retry
+          </button>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="container mx-auto p-4">
-      {/* Search Box */}
-      <div className="mb-6">
-        <input
-          type="text"
-          placeholder="Search across all fields..."
-          value={searchTerm}
-          onChange={handleSearch}
-          className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-        />
+    <div className="bg-white shadow-lg overflow-hidden">
+      {/* Header */}
+      <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4">
+        <h1 className="text-2xl font-bold text-white">Contact List</h1>
+        <p className="text-blue-100 mt-1">Contact form submissions</p>
+      </div>
+
+      {/* Controls */}
+      <div className="p-6 border-b border-gray-200">
+        <div className="flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center">
+          <div className="flex-1 w-full sm:max-w-md">
+            <div className="relative">
+              <input
+                type="text"
+                placeholder="Search across all fields..."
+                value={searchTerm}
+                onChange={handleSearch}
+                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <svg className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+              </div>
+            </div>
+          </div>
+          
+          <div className="flex items-center space-x-2 text-sm text-gray-600">
+            <span>Total:</span>
+            <span className="font-semibold text-blue-600">{sortedData.length}</span>
+            <span>contacts</span>
+          </div>
+        </div>
       </div>
 
       {/* Table Container */}
-      <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-        {/* Mobile Cards */}
+      <div className="overflow-hidden">
+        {/* Mobile Cards View */}
         <div className="block md:hidden">
-          {paginatedData.map((item, index) => (
-            <motion.div
-              key={item.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: index * 0.05 }}
-              className="border-b border-gray-200 p-4 hover:bg-gray-50"
-            >
-              <div className="space-y-2">
-                <div className="flex justify-between">
-                  <span className="font-semibold text-gray-600">S.No.</span>
-                  <span>{(currentPage - 1) * itemsPerPage + index + 1}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="font-semibold text-gray-600">Name</span>
-                  <span className="truncate max-w-[150px]">{item.name}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="font-semibold text-gray-600">Email</span>
-                  <span className="truncate max-w-[150px]">{item.email}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="font-semibold text-gray-600">Phone</span>
-                  <span>{item.number}</span> {/* Fixed: using item.number */}
-                </div>
-                <div className="flex justify-between">
-                  <span className="font-semibold text-gray-600">Apply Date</span>
-                  <span>{formatDate(item.createdAt)}</span>
-                </div>
-                <div>
-                  <span className="font-semibold text-gray-600 block mb-1">Message</span>
-                  <p className="text-sm text-gray-700 line-clamp-2">{item.message}</p>
-                </div>
-              </div>
-            </motion.div>
-          ))}
+          {paginatedData.length === 0 ? (
+            <div className="text-center py-12 text-gray-500">
+              <div className="text-4xl mb-2">📞</div>
+              <p>No contacts found</p>
+              {searchTerm && <p className="text-sm mt-1">Try adjusting your search terms</p>}
+            </div>
+          ) : (
+            <div className="divide-y divide-gray-200">
+              {paginatedData.map((item, index) => (
+                <motion.div
+                  key={item.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3, delay: index * 0.05 }}
+                  className="p-4 hover:bg-gray-50 transition-colors duration-150"
+                >
+                  <div className="space-y-3">
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <span className="text-sm font-medium text-gray-500">S.No.</span>
+                        <p className="font-semibold">{(currentPage - 1) * itemsPerPage + index + 1}</p>
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <span className="text-sm font-medium text-gray-500">Name</span>
+                      <p className="font-semibold text-gray-900">{item.name}</p>
+                    </div>
+                    
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <span className="text-sm font-medium text-gray-500">Phone</span>
+                        <p className="text-gray-900">{item.number}</p>
+                      </div>
+                      <div>
+                        <span className="text-sm font-medium text-gray-500">Apply Date</span>
+                        <p className="text-gray-900">{formatDate(item.createdAt)}</p>
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <span className="text-sm font-medium text-gray-500">Email</span>
+                      <p className="text-gray-900 truncate">{item.email}</p>
+                    </div>
+                    
+                    <div>
+                      <span className="text-sm font-medium text-gray-500">Message</span>
+                      <p className="text-gray-900 text-sm line-clamp-2">{item.message}</p>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          )}
         </div>
 
-        {/* Desktop Table */}
+        {/* Desktop Table View */}
         <div className="hidden md:block overflow-x-auto">
           <table className="w-full">
             <thead className="bg-gray-50">
@@ -247,12 +300,8 @@ const DataTable = () => {
                     <div className="flex items-center space-x-1">
                       <span>{header.label}</span>
                       {header.sortable && (
-                        <span className="text-gray-400">
-                          {sortConfig.key === header.key
-                            ? sortConfig.direction === 'asc'
-                              ? '↑'
-                              : '↓'
-                            : '↕'}
+                        <span className="text-gray-400 text-sm">
+                          {getSortIndicator(header.key)}
                         </span>
                       )}
                     </div>
@@ -261,97 +310,116 @@ const DataTable = () => {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {paginatedData.map((item, index) => (
-                <motion.tr
-                  key={item.id}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.3, delay: index * 0.05 }}
-                  className="hover:bg-gray-50 transition-colors"
-                >
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    {(currentPage - 1) * itemsPerPage + index + 1}
+              {paginatedData.length === 0 ? (
+                <tr>
+                  <td colSpan={tableHeaders.length} className="px-6 py-12 text-center">
+                    <div className="text-gray-500">
+                      <div className="text-4xl mb-2">📞</div>
+                      <p>No contacts found</p>
+                      {searchTerm && <p className="text-sm mt-1">Try adjusting your search terms</p>}
+                    </div>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                    {item.name}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    {item.email}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    {item.number} {/* Fixed: using item.number */}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    {formatDate(item.createdAt)}
-                  </td>
-                  <td className="px-6 py-4 text-sm text-gray-900 max-w-xs truncate">
-                    {item.message}
-                  </td>
-                </motion.tr>
-              ))}
+                </tr>
+              ) : (
+                paginatedData.map((item, index) => (
+                  <motion.tr
+                    key={item.id}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3, delay: index * 0.05 }}
+                    className="hover:bg-gray-50 transition-colors duration-150"
+                  >
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                      {(currentPage - 1) * itemsPerPage + index + 1}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-semibold text-gray-900">
+                      {item.name}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      <div className="max-w-xs truncate" title={item.email}>
+                        {item.email}
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      {item.number}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      {formatDate(item.createdAt)}
+                    </td>
+                    <td className="px-6 py-4 text-sm text-gray-900 max-w-xs">
+                      <div className="max-w-xs truncate" title={item.message}>
+                        {item.message}
+                      </div>
+                    </td>
+                  </motion.tr>
+                ))
+              )}
             </tbody>
           </table>
         </div>
 
-        {/* No Data State */}
-        {paginatedData.length === 0 && (
-          <div className="text-center py-8 text-gray-500">
-            No data found
+        {/* Pagination */}
+        {sortedData.length > 0 && (
+          <div className="px-6 py-4 border-t border-gray-200">
+            <div className="flex flex-col sm:flex-row items-center justify-between space-y-4 sm:space-y-0">
+              <div className="text-sm text-gray-700">
+                Showing <span className="font-semibold">{((currentPage - 1) * itemsPerPage) + 1}</span> to{' '}
+                <span className="font-semibold">
+                  {Math.min(currentPage * itemsPerPage, sortedData.length)}
+                </span> of{' '}
+                <span className="font-semibold">{sortedData.length}</span> contacts
+              </div>
+              
+              <div className="flex items-center space-x-1">
+                <button
+                  onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                  disabled={currentPage === 1}
+                  className="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                >
+                  Previous
+                </button>
+                
+                {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+                  let pageNum;
+                  if (totalPages <= 5) {
+                    pageNum = i + 1;
+                  } else if (currentPage <= 3) {
+                    pageNum = i + 1;
+                  } else if (currentPage >= totalPages - 2) {
+                    pageNum = totalPages - 4 + i;
+                  } else {
+                    pageNum = currentPage - 2 + i;
+                  }
+                  
+                  return (
+                    <button
+                      key={pageNum}
+                      onClick={() => setCurrentPage(pageNum)}
+                      className={`px-3 py-2 text-sm font-medium rounded-md min-w-[40px] transition-colors ${
+                        currentPage === pageNum
+                          ? 'bg-blue-600 text-white'
+                          : 'text-gray-500 bg-white border border-gray-300 hover:bg-gray-50'
+                      }`}
+                    >
+                      {pageNum}
+                    </button>
+                  );
+                })}
+                
+                <button
+                  onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                  disabled={currentPage === totalPages}
+                  className="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                >
+                  Next
+                </button>
+              </div>
+            </div>
           </div>
         )}
       </div>
-
-      {/* Pagination */}
-      {sortedData.length > 0 && (
-        <div className="flex flex-col sm:flex-row items-center justify-between mt-6 space-y-4 sm:space-y-0">
-          <div className="text-sm text-gray-700">
-            Showing {((currentPage - 1) * itemsPerPage) + 1} to{' '}
-            {Math.min(currentPage * itemsPerPage, sortedData.length)} of{' '}
-            {sortedData.length} entries
-          </div>
-          <div className="flex space-x-2">
-            <button
-              onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-              disabled={currentPage === 1}
-              className="px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              Previous
-            </button>
-            {Array.from({ length: Math.ceil(sortedData.length / itemsPerPage) }, (_, i) => i + 1)
-              .filter(page => 
-                page === 1 || 
-                page === Math.ceil(sortedData.length / itemsPerPage) ||
-                Math.abs(page - currentPage) <= 1
-              )
-              .map((page, index, array) => (
-                <React.Fragment key={page}>
-                  {index > 0 && array[index - 1] !== page - 1 && (
-                    <span className="px-4 py-2 text-sm text-gray-500">...</span>
-                  )}
-                  <button
-                    onClick={() => setCurrentPage(page)}
-                    className={`px-4 py-2 text-sm font-medium rounded-md ${
-                      currentPage === page
-                        ? 'bg-blue-600 text-white'
-                        : 'text-gray-500 bg-white border border-gray-300 hover:bg-gray-50'
-                    }`}
-                  >
-                    {page}
-                  </button>
-                </React.Fragment>
-              ))}
-            <button
-              onClick={() => setCurrentPage(prev => Math.min(prev + 1, Math.ceil(sortedData.length / itemsPerPage)))}
-              disabled={currentPage === Math.ceil(sortedData.length / itemsPerPage)}
-              className="px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              Next
-            </button>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
 
-export default DataTable;
+export default ContactList;

@@ -16,12 +16,12 @@ import Footer from "./Components/Footer";
 import MemberForm from "./Components/MemberForm";
 import AthleteForm from "./Components/AthleteForm";
 import CoachForm from "./Components/CoachForm";
-import DataTable from "./Pages/ContactList";
 import NewRegisterMembers from "./Pages/NewRegisterMembers";
 import NewRegisterAthlets from "./Pages/NewRegisterAthletes";
 import NewRegisterCoachs from "./Pages/NewRegisterCoachs";
-import Admin from "./Pages/admin";
+import ContactList from "./Pages/ContactList";
 import AdminLayout from "./Pages/Admin/AdminLayout";
+import Admin from "./Pages/Admin/admin";
 
 function App() {
   const [isSticky, setIsSticky] = useState(false);
@@ -63,7 +63,7 @@ function App() {
         <Route path="/coachform" element={<CoachForm />} />
         <Route path="/admin" element={<AdminLayout/>}>
           <Route index element={<Admin />} />
-          <Route path="querylist" element={<DataTable />} />
+          <Route path="querylist" element={<ContactList />} />
           <Route path="memberlist" element={<NewRegisterMembers />} />
           <Route path="athletelist" element={<NewRegisterAthlets />} />
           <Route path="coachlist" element={<NewRegisterCoachs />} />
