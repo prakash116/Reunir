@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { motion } from 'framer-motion';
 
-const API_URL = 'http://localhost:8787/coach';
+const API_URL = 'https://asgf.onrender.com/coach';
 
 const NewRegisterCoachs = () => {
   const [coaches, setCoaches] = useState([]);

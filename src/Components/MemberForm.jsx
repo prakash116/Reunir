@@ -119,7 +119,7 @@ const MemberForm = () => {
 
       console.log('Submitting data:', submitData);
 
-      const response = await fetch('http://localhost:8585/member', {
+      const response = await fetch('https://asgf.onrender.com/member', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

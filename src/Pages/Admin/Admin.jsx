@@ -40,7 +40,7 @@ const Admin = () => {
 
     try {
       setLoading(true);
-      const response = await fetch("http://localhost:8787/secureCheck", {
+      const response = await fetch("https://asgf.onrender.com/secureCheck", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -124,7 +124,7 @@ const GetInTouch = memo(function GetInTouch() {
 
       console.log('Submitting contact data:', submitData);
 
-      const response = await fetch('http://localhost:8585/contact', {
+      const response = await fetch('https://asgf.onrender.com/contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

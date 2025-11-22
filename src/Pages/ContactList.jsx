@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { motion } from 'framer-motion';
 
-const API_URL = 'http://localhost:8787/contact';
+const API_URL = 'https://asgf.onrender.com/contact';
 
 const ContactList = () => {
   const [data, setData] = useState([]);

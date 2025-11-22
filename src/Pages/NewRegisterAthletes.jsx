@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { motion } from 'framer-motion';
 
-const API_URL = 'http://localhost:8787/athlete';
+const API_URL = 'https://asgf.onrender.com/athlete';
 
 const NewRegisterAthlets = () => {
   const [athletes, setAthletes] = useState([]);
